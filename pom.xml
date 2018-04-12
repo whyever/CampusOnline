@@ -5,7 +5,7 @@
 
     <groupId>com.bugless</groupId>
     <artifactId>campus_online</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>campus_online</name>
