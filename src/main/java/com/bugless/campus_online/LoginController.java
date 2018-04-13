@@ -2,19 +2,51 @@ package com.bugless.campus_online;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/login")
 public class LoginController {
-    @Autowired
-    private LoginRepository loginRepo;
 
-    public LoginController(LoginRepository loginRepo) {
-        this.loginRepo = loginRepo;
+    private StuLoginRepository stuLoginRepo;
+    private TcherLoginRepository tcherLoginRepo;
+
+    @Autowired
+    public LoginController(StuLoginRepository stuLoginRepo, TcherLoginRepository tcherLoginRepo) {
+        this.stuLoginRepo = stuLoginRepo;
+        this.tcherLoginRepo = tcherLoginRepo;
     }
 
-    public String login() {
+    /*
+    @RequestMapping(method = RequestMethod.GET)
+    public String loginGET(Model model) {
+
+        return "login";
+    }
+    */
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String loginPOST(LoginFetch loginFetch) {
+        String ID = loginFetch.getID();
+        String passwd = loginFetch.getPasswd();
+        int flag = loginFetch.getFlag();
+
+        if (flag == 1) {
+            TcherLogin tcherLogin = tcherLoginRepo.findByTcherID(ID);
+            if (passwd.equals(tcherLogin.getTcherPasswd())) {
+                return "teacher";
+            }
+        }
+        if (flag == 0) {
+            StuLogin stuLogin = stuLoginRepo.findByStuID(ID);
+            if (passwd.equals(stuLogin.getStuPasswd())) {
+                return "student";
+            }
+        }
         return "login";
     }
 }
