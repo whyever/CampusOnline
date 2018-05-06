@@ -38,15 +38,15 @@ public class LoginController {
         if (flag == 1) {
             TcherLogin tcherLogin = tcherLoginRepo.findByTcherID(ID);
             if (passwd.equals(tcherLogin.getTcherPasswd())) {
-                return "teacher";
+                return "redirect:/teacher";
             }
         }
         if (flag == 0) {
             StuLogin stuLogin = stuLoginRepo.findByStuID(ID);
             if (passwd.equals(stuLogin.getStuPasswd())) {
-                return "student";
+                return "redirect:/student";
             }
         }
-        return "login";
+        return "redirect:/login";
     }
 }
