@@ -3,9 +3,15 @@ package com.bugless.campus_online;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class LoginFetch {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 
     private String ID;
     private String passwd;
