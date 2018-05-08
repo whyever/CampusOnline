@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>student</title>
 </head>
 <body>
-    <title>Student Page</title>
+    <h2>Student Page</h2>
+    <div >
+        <dl th:each="stu : ${stuReserves}">
+            <dt>
+                <span th:text="${stu.tcherID}">Teacher</span>
+                <br/>
+            </dt>
+        </dl>
+    </div>
 </body>
 </html>

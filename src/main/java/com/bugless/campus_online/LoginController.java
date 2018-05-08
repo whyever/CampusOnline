@@ -23,6 +23,7 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String loginGET(Model model) {
+        System.out.println("GET");
         return "login";
     }
 

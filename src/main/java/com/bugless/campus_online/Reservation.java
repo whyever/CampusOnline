@@ -25,6 +25,10 @@ public class Reservation {
     @Column(name = "stu_id")
     private String stuID;
 
+    //为1,用于提取表中数据
+    @Column(name = "tag")
+    private int tag;
+
     public String getTcherID() { return tcherID; }
     public void setTcherID(String tcherID) { this.tcherID = tcherID; }
 
@@ -36,4 +40,7 @@ public class Reservation {
 
     public String getStuID() { return stuID; }
     public void setStuID(String stuID) { this.stuID = stuID; }
+
+    public int getTag() { return tag; }
+    public void setTag(int tag) { this.tag = tag; }
 }
