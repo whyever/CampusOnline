@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Student</title>
+    <title>Teacher</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/element-ui/1.1.2/theme-default/index.css">
     <script src="//cdn.bootcss.com/vue/2.3.0/vue.min.js"></script>
     <script src="//cdn.bootcss.com/element-ui/1.3.0/index.js"></script>
@@ -13,7 +13,7 @@
 <div id="app">
     <div class="header">
         <span class="logo">
-            <span class="font" >学生界面</span>
+            <span class="font" >教师界面</span>
         </span>
         <span class="userinfo">
 
@@ -21,20 +21,32 @@
     </div>
     <div class="main">
         <aside class="guide">
-            <form class="add" method="post" th:method="post" th:object="${msg}">
+            <form class="add" method="post">
+                <!--
                 <div class="function" >
                     <a class="function_tch">选择教师</a>
                     <br>
-                    <select class="select_bar" th:field="${msg.tch.ID}">
-                        <option th:each="stu,time,tch: ${inqList}" th:name="${tch.ID}" th:value="${tch.name}"></option>
-                    </select>
+                    <table>
+                        <%
+                        List<> list=app.getteacher();
+                        tch=list.head;
+                        while(list!=null)
+                        {
+                        %>
+                        <tr><%!=tch.name%></tr>
+                        <%
+                        tch=tch.next;
+                        }
+                        %>
+                    </table>
+                    <input type="submit" name="select_tch" value="确认老师">
                 </div>
-                <!--级联select 动态 待解决-->
+                -->
                 <div class="function">
                     <a class="function_time">选择时间</a>
                     <br>
-                    <select class="select_bar" th:field="${msg.time}">
-                        <option th:each="stu,time,tch: ${inqList}" th:name="time.ID" th:value="time"></option>
+                    <select class="select_bar" th:field="{status}">
+                        <option ><%=time></option>
                     </select>
                 </div>
                 <div class="function">
@@ -78,25 +90,32 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table_row" th:each="stu,time,tch : ${msg}">
+                            <%int num;%>
+                            <%
+                            List  list=;
+                            while(list!=null)
+                            {
+                            res=list->head;
+                            %>
+                            <tr class="table_row">
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div ><%=num%></div>
+                                        <div><%=num%></div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="res.stuID">学生ID</div>
+                                        <div><%=res.stuID%></div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="res.time">预约时间</div>
+                                        <div><%=res.time%></div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="res.tchID">教师ID></div>
+                                        <div><%=res.tchID%></div>
                                     </div>
                                 </td>
                                 <td class="table_cell" width="10">
@@ -161,7 +180,7 @@
         background-color: #eef1f6;
     }
     .function{
-        height: 40%;
+        height: 80%;
     }
     .content{
         position: absolute;top:0%;bottom: 0%;left: 20%;right: 0%;
