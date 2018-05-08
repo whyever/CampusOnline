@@ -12,28 +12,29 @@ import java.util.List;
 @RequestMapping("/login")
 public class LoginController {
 
+    @Autowired
     private StuLoginRepository stuLoginRepo;
     private TcherLoginRepository tcherLoginRepo;
 
-    @Autowired
     public LoginController(StuLoginRepository stuLoginRepo, TcherLoginRepository tcherLoginRepo) {
         this.stuLoginRepo = stuLoginRepo;
         this.tcherLoginRepo = tcherLoginRepo;
     }
 
-    /*
     @RequestMapping(method = RequestMethod.GET)
     public String loginGET(Model model) {
-
+        System.out.println("GET");
         return "login";
     }
-    */
 
     @RequestMapping(method = RequestMethod.POST)
     public String loginPOST(LoginFetch loginFetch) {
         String ID = loginFetch.getID();
+        System.out.println(ID);
         String passwd = loginFetch.getPasswd();
+        System.out.println(passwd);
         int flag = loginFetch.getFlag();
+        System.out.println(flag);
 
         if (flag == 1) {
             TcherLogin tcherLogin = tcherLoginRepo.findByTcherID(ID);
@@ -42,11 +43,22 @@ public class LoginController {
             }
         }
         if (flag == 0) {
+            System.out.println("1");
             StuLogin stuLogin = stuLoginRepo.findByStuID(ID);
+            System.out.println("2");
+
             if (passwd.equals(stuLogin.getStuPasswd())) {
+<<<<<<< HEAD
                 return "redirect:/student";
             }
         }
+=======
+                System.out.println("3");
+                return "redirect:/student";
+            }
+        }
+        System.out.println("4");
+>>>>>>> 6045e14325832de24748d116c3b2ccae1fad8bef
         return "redirect:/login";
     }
 }

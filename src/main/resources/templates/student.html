@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -230,3 +231,23 @@
         height: 100%;
     }
 </style>
+=======
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>student</title>
+</head>
+<body>
+    <h2>Student Page</h2>
+    <div >
+        <dl th:each=" stu: ${stuReserves}">
+        <dt>
+            <span th:text="${stu.tcherID}">Teacher</span>
+            <br/>
+        </dt>
+        </dl>
+    </div>
+</body>
+</html>
+>>>>>>> 6045e14325832de24748d116c3b2ccae1fad8bef
