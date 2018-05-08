@@ -1,5 +1,7 @@
 package com.bugless.campus_online;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,9 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
+    @Column(name = "id" , nullable=false)
+    private int id;
 
     //教师ID
     @Column(name = "tcher_id" ,nullable = false)
@@ -24,6 +29,14 @@ public class Reservation {
     //学生ID
     @Column(name = "stu_id")
     private String stuID;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTcherID() { return tcherID; }
     public void setTcherID(String tcherID) { this.tcherID = tcherID; }
