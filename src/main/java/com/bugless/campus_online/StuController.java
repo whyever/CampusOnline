@@ -18,18 +18,5 @@ public class StuController {
     public StuController(ReserveRepository reserveRepository) {
         this.reserveRepository = reserveRepository;
     }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String stuGET(Model model) {
-        List<Reservation> stuReserve = reserveRepository.findDistinctByTag(1);
-        System.out.println("GET");
-        model.addAttribute("stuReserves",stuReserve);
-
-        return "student";
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String stuPOST(Model model) {
-        return "student";
-    }
+    
 }
