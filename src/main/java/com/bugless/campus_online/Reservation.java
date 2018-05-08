@@ -11,6 +11,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
+    //每个表项的序号
     @Column(name = "id" , nullable=false)
     private int id;
 
@@ -30,13 +31,12 @@ public class Reservation {
     @Column(name = "stu_id")
     private String stuID;
 
-    public int getId() {
-        return id;
-    }
+    //为1,用于提取表中数据
+    @Column(name = "tag")
+    private int tag;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getTcherID() { return tcherID; }
     public void setTcherID(String tcherID) { this.tcherID = tcherID; }
@@ -49,4 +49,7 @@ public class Reservation {
 
     public String getStuID() { return stuID; }
     public void setStuID(String stuID) { this.stuID = stuID; }
+
+    public int getTag() { return tag; }
+    public void setTag(int tag) { this.tag = tag; }
 }
