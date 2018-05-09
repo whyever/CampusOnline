@@ -15,36 +15,55 @@ public class StuController {
 
     @Autowired
     private ReserveRepository reserveRepository;
-    //可预约老师
-    private String availaTcherID;
-    //可预约时间
-    private String availaTime;
-    //当前学生ID
-    private String stuID;
-    //当前学生已预约教师
-    private String reserveTcherID;
-    //当前学生已预约时间
-    private String reserveTime;
 
     public StuController(ReserveRepository reserveRepo) {
         this.reserveRepository = reserveRepo;
     }
 
-    //获取当前可预约教师
+    //获取当前可预约教师以及时间
     @RequestMapping(method = RequestMethod.GET)
-    public String stuGET(StuFetch stuFetch, Model model) {
-        //availaTcherID = stuFetch.getAvailableTcherID();
-        //availaTime = stuFetch.getAvailableTime();
-        //Reservation stuReserve = reserveRepository.findByTcherIDAndAndResrvTime(availaTcherID,availaTime);
-        List<Reservation> stuReserve = reserveRepository.findDistinctByTag(1);
+    public String getReserve(Model model) {
+        //reserv_flag为0代表可以预约
+        List<Reservation> availableReserve = reserveRepository.findByResrvFlag(0);
         System.out.println("GET");
-        model.addAttribute("stuReserves",stuReserve);
+        model.addAttribute("stuReserves",availableReserve);
+        System.out.println("StuController : Get the reservation info");
 
         return "student";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String stuPOST(Model model) {
+    //提交预约
+    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+    public String submitReserve(StuFetch stuFetch) {
+        String stuID = stuFetch.getStuID();
+        String availaTcherID = stuFetch.getAvailableTcherID();
+        String availaTime = stuFetch.getAvailableTime();
+        //提交预约即在已有表项中写入学生学号及预约标记
+        reserveRepository.submitReserve(stuID,1,availaTcherID,availaTime);
+        System.out.println("StuController : Submitted the reservation");
+
+        return "student";
+    }
+
+    //编辑当前预约
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String editReserve(StuFetch stuFetch) {
+        String stuID = stuFetch.getStuID();
+        String reserveTime = stuFetch.getReserveTime();
+        String reserveTcher = stuFetch.getReserveTcherID();
+        reserveRepository.editReserve(reserveTcher,reserveTime,stuID);
+        System.out.println("StuController : Modified the reservation");
+
+        return "student";
+    }
+
+    //删除当前预约
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteReserve(StuFetch stuFetch) {
+        String stuID = stuFetch.getStuID();
+        reserveRepository.deleteReserve(stuID);
+        System.out.println("StuController : Deleted the reservation");
+
         return "student";
     }
 }

@@ -48,17 +48,11 @@ public class LoginController {
             System.out.println("2");
 
             if (passwd.equals(stuLogin.getStuPasswd())) {
-<<<<<<< HEAD
-                return "redirect:/student";
-            }
-        }
-=======
                 System.out.println("3");
                 return "redirect:/student";
             }
         }
         System.out.println("4");
->>>>>>> 6045e14325832de24748d116c3b2ccae1fad8bef
         return "redirect:/login";
     }
 }
