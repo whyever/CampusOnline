@@ -49,9 +49,8 @@ public class TcherController {
     }
     //修改此项为不可预约
     @RequestMapping(value="/update" , method=RequestMethod.POST)
-    public String update()
+    public String update(TcherFetch tcherFetch)
     {
-        TcherFetch tcherFetch=new TcherFetch();
         tcherID=tcherFetch.getTcherID();
         Time=tcherFetch.getTime();
         /*数据库查询重写
@@ -66,9 +65,8 @@ public class TcherController {
 
     //首先测试这个吧
     @RequestMapping(value="/delete" ,method = RequestMethod.POST)
-    public String delete()
+    public String delete(TcherFetch tcherFetch)
     {
-        TcherFetch tcherFetch=new TcherFetch();
         tcherID=tcherFetch.getTcherID();
         Time=tcherFetch.getTime();
         /*JPQL

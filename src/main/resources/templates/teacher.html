@@ -16,7 +16,7 @@
             <span class="font" >教师界面</span>
         </span>
         <span class="userinfo">
-
+            <!--测试记录用户属性-->
         </span>
     </div>
     <div class="main">
@@ -42,7 +42,7 @@
                     <input type="submit" name="select_tch" value="确认老师">
                 </div>
                 -->
-                <div class="function">
+                <div class="function" th:method="get" >
                     <a class="function_time">选择时间</a>
                     <br>
                     <select class="select_bar" th:field="">
@@ -90,34 +90,37 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table_row">
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text=""></div>
-                                    </div>
-                                </td>
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text="">StuID</div>
-                                    </div>
-                                </td>
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text="">time</div>
-                                    </div>
-                                </td>
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text="">TeacherID</div>
-                                    </div>
-                                </td>
-                                <td class="table_cell" width="10">
-                                    <div class="cell" align="center">
-                                        <button type="button" class="button" name="edit">编辑</button>
-                                        <button type="button" class="button" name="delete">删除</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <!--action 路径不确定-->
+                            <form method="post" th:object="${TcherFetch}" th:action="/delete" >
+                                <!--加get返回预约信息，注入list表格显示-->
+                                <tr class="table_row" th:each="reserve:${list}">
+                                    <td class="table_cell">
+                                        <div class="cell">
+                                            <div th:text=""></div>
+                                        </div>
+                                    </td>
+                                    <td class="table_cell">
+                                        <div class="cell">
+                                            <div th:text="reserve.stuID" th:value="*{stuID}">StuID</div>
+                                        </div>
+                                    </td>
+                                    <td class="table_cell">
+                                        <div class="cell">
+                                            <div th:text="reserve.time" th:value="*{Time}">time</div>
+                                        </div>
+                                    </td>
+                                    <td class="table_cell">
+                                        <div class="cell">
+                                            <div th:text="reserve.tchID" th:value="*{tcherID}">TeacherID</div>
+                                        </div>
+                                    </td>
+                                    <td class="table_cell" width="10">
+                                        <div class="cell" align="center">
+                                            <button type="submit" class="button" name="delete">删除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </form>
                             </tbody>
                         </table>
                     </div>
@@ -144,6 +147,10 @@
 
 </body>
 </html>
+
+<script>
+
+</script>
 
 <style>
     body{
