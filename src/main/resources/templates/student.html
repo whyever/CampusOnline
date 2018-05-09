@@ -21,20 +21,20 @@
     </div>
     <div class="main">
         <aside class="guide">
-            <form class="add" method="post" th:method="post" th:object="${msg}">
+            <form class="add" method="post" th:method="post" th:object="">
                 <div class="function" >
                     <a class="function_tch">选择教师</a>
                     <br>
-                    <select class="select_bar" th:field="${msg.tch.ID}">
-                        <option th:each="stu,time,tch: ${inqList}" th:name="${tch.ID}" th:value="${tch.name}"></option>
+                    <select class="select_bar" th:field="">
+                        <option th:each="" th:name="" th:value=""></option>
                     </select>
                 </div>
                 <!--级联select 动态 待解决-->
                 <div class="function">
                     <a class="function_time">选择时间</a>
                     <br>
-                    <select class="select_bar" th:field="${msg.time}">
-                        <option th:each="stu,time,tch: ${inqList}" th:name="time.ID" th:value="time"></option>
+                    <select class="select_bar" th:field="">
+                        <option th:each="" th:name="time.ID" th:value="time"></option>
                     </select>
                 </div>
                 <div class="function">
@@ -78,25 +78,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table_row" th:each="stu,time,tch : ${msg}">
+                            <tr class="table_row" th:each="" th:with="num=0">
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div ><%=num%></div>
+                                        <div th:text=""></div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="res.stuID">学生ID</div>
+                                        <div th:text="">学生ID</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="res.time">预约时间</div>
+                                        <div th:text="">预约时间</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="res.tchID">教师ID></div>
+                                        <div th:text="">教师ID></div>
                                     </div>
                                 </td>
                                 <td class="table_cell" width="10">
@@ -105,11 +105,7 @@
                                         <button type="button" class="button" name="delete">删除</button>
                                     </div>
                                 </td>
-                                <%num=num+1;%>
                             </tr>
-                            <%
-                            }
-                            %>
                             </tbody>
                         </table>
                     </div>

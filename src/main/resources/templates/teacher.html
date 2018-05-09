@@ -45,8 +45,8 @@
                 <div class="function">
                     <a class="function_time">选择时间</a>
                     <br>
-                    <select class="select_bar" th:field="{status}">
-                        <option ><%=time></option>
+                    <select class="select_bar" th:field="">
+                        <option ></option>
                     </select>
                 </div>
                 <div class="function">
@@ -90,32 +90,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <%int num;%>
-                            <%
-                            List  list=;
-                            while(list!=null)
-                            {
-                            res=list->head;
-                            %>
                             <tr class="table_row">
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div><%=num%></div>
+                                        <div th:text=""></div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div><%=res.stuID%></div>
+                                        <div th:text="">StuID</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div><%=res.time%></div>
+                                        <div th:text="">time</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div><%=res.tchID%></div>
+                                        <div th:text="">TeacherID</div>
                                     </div>
                                 </td>
                                 <td class="table_cell" width="10">
@@ -124,11 +117,7 @@
                                         <button type="button" class="button" name="delete">删除</button>
                                     </div>
                                 </td>
-                                <%num=num+1;%>
                             </tr>
-                            <%
-                            }
-                            %>
                             </tbody>
                         </table>
                     </div>
