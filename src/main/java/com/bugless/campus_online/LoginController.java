@@ -6,8 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -23,36 +21,38 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String loginGET(Model model) {
-        System.out.println("GET");
+        System.out.println("GET finished");
         return "login";
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String loginPOST(LoginFetch loginFetch) {
         String ID = loginFetch.getID();
-        System.out.println(ID);
+        System.out.println("Login : ID is " + ID);
         String passwd = loginFetch.getPasswd();
-        System.out.println(passwd);
+        System.out.println("Login : Password is " + passwd);
         int flag = loginFetch.getFlag();
-        System.out.println(flag);
+        System.out.println("Login : Flag is " + flag);
 
         if (flag == 1) {
+            System.out.println("Login: Teacher");
             TcherLogin tcherLogin = tcherLoginRepo.findByTcherID(ID);
+            System.out.println("Login : Get teacher's ID");
             if (passwd.equals(tcherLogin.getTcherPasswd())) {
+                System.out.println("Login : Goto teacher page");
                 return "redirect:/teacher";
             }
         }
         if (flag == 0) {
-            System.out.println("1");
+            System.out.println("Login : Student");
             StuLogin stuLogin = stuLoginRepo.findByStuID(ID);
-            System.out.println("2");
-
+            System.out.println("Login : Get student's ID");
             if (passwd.equals(stuLogin.getStuPasswd())) {
-                System.out.println("3");
+                System.out.println("Login: Goto student page");
                 return "redirect:/student";
             }
         }
-        System.out.println("4");
+        System.out.println("Login: return to login page");
         return "redirect:/login";
     }
 }

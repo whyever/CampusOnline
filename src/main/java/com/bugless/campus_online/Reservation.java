@@ -1,7 +1,5 @@
 package com.bugless.campus_online;
 
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 
 @Entity
