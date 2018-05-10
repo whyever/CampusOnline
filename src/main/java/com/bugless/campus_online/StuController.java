@@ -34,10 +34,9 @@ public class StuController {
         List<Reservation> availableReserve = reserveRepository.findByResrvFlag(0);
         System.out.println("StuController : GET");
         model.addAttribute("stuReserves",availableReserve);
-        System.out.println("StuController : Get the reservation info");
-
         List<Reservation> currentReserve  = reserveRepository.findByStuID(ID);
         model.addAttribute("currentReserves", currentReserve);
+        System.out.println("StuController : Get the reservation info");
 
         return "student";
     }
@@ -49,11 +48,12 @@ public class StuController {
     //提交预约
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submitReserve(StuFetch stuFetch) {
-        String stuID = stuFetch.getStuID();
         String availaTcherID = stuFetch.getAvailableTcherID();
+        System.out.println("StuController-submit-tcherid : "+availaTcherID);
         String availaTime = stuFetch.getAvailableTime();
+        System.out.println("StuController-submit-tcherid : "+availaTime);
         //提交预约即在已有表项中写入学生学号及预约标记
-        reserveRepository.submitReserve(stuID,1,availaTcherID,availaTime);
+        reserveRepository.submitReserve(current_id,1,availaTcherID,availaTime);
         System.out.println("StuController : Submitted the reservation");
 
         return "student";
@@ -62,10 +62,11 @@ public class StuController {
     //编辑当前预约
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editReserve(StuFetch stuFetch) {
-        String stuID = stuFetch.getStuID();
         String reserveTime = stuFetch.getReserveTime();
+        System.out.println("StuController-edit-reserveTime : "+reserveTime);
         String reserveTcher = stuFetch.getReserveTcherID();
-        reserveRepository.editReserve(reserveTcher,reserveTime,stuID);
+        System.out.println("StuController-edit-reserveTcher : "+reserveTcher);
+        reserveRepository.editReserve(reserveTcher,reserveTime,current_id);
         System.out.println("StuController : Modified the reservation");
 
         return "student";
@@ -73,9 +74,8 @@ public class StuController {
 
     //删除当前预约
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String deleteReserve(StuFetch stuFetch) {
-        String stuID = stuFetch.getStuID();
-        reserveRepository.deleteReserve(stuID);
+    public String deleteReserve() {
+        reserveRepository.deleteReserve(current_id);
         System.out.println("StuController : Deleted the reservation");
 
         return "student";
