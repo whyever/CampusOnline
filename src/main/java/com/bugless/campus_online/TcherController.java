@@ -3,13 +3,17 @@ package com.bugless.campus_online;
 //import com.sun.org.apache.xpath.internal.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.validation.Valid;
 import java.lang.*;
 import java.util.List;
 
@@ -53,11 +57,6 @@ public class TcherController {
     {
         tcherID=tcherFetch.getTcherID();
         Time=tcherFetch.getTime();
-        /*数据库查询重写
-        Reservation reservation=reserveRepository.findByTcherIDAndAndResrvTime(tcherID,Time);
-        reservation.setResrvFlag(1);
-        reserveRepository.save(reservation);
-        */
         reserveRepository.updateReservation(tcherID,Time);
         return("update");
 
@@ -65,27 +64,22 @@ public class TcherController {
 
     //首先测试这个吧
     @RequestMapping(value="/delete" ,method = RequestMethod.POST)
-    public String delete(TcherFetch tcherFetch)
+    public String delete(@Valid TcherFetch tcherFetch, Model model, BindingResult result)
     {
-        tcherID=tcherFetch.getTcherID();
-        Time=tcherFetch.getTime();
-        /*JPQL
-        EntityManagerFactory emfactory = Persistence.
-                createEntityManagerFactory( "link_JPA" );
-        EntityManager entitymanager = emfactory.
-                createEntityManager();
-        Query query=entitymanager.
-                createQuery(
-                "select r.id "+
-                "from  reservation r "+
-                "where r.tcher_id=?1 and r.resrv_time=?2");
-        query.setParameter(1,tcherID);
-        query.setParameter(2,Time);
-        Integer n= (Integer) query.getSingleResult();
-        */
+        System.out.println(tcherID=tcherFetch.getTcherID());
+        System.out.println(Time=tcherFetch.getTime());
+        if(result.hasErrors())
+        {
+            model.addAttribute("MSG","error");
+        }
+        else
+        {
+            model.addAttribute("MSG","right");
+        }
+
         Reservation reservation = reserveRepository.findByTcherIDAndAndResrvTime(tcherID,Time);
         reserveRepository.delete(reservation.getId());
-        return("delete");
+        return "teacher";
     }
 
 }

@@ -91,12 +91,12 @@
                             </thead>
                             <tbody>
                             <!--action 路径不确定-->
-                            <form method="post" th:object="${TcherFetch}" th:action="/delete" >
+                            <form th:method="post" th:object="${TcherFetch}" th:action="@{/delete}" >
                                 <!--加get返回预约信息，注入list表格显示-->
                                 <tr class="table_row" th:each="reserve:${list}">
                                     <td class="table_cell">
                                         <div class="cell">
-                                            <div th:text=""></div>
+                                            <div th:text="${MSG}">结果</div>
                                         </div>
                                     </td>
                                     <td class="table_cell">
