@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/login")
@@ -26,13 +27,14 @@ public class LoginController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String loginPOST(LoginFetch loginFetch) {
+    public String loginPOST(LoginFetch loginFetch, RedirectAttributes redirectAttributes) {
         String ID = loginFetch.getID();
         System.out.println("Login : ID is " + ID);
         String passwd = loginFetch.getPasswd();
         System.out.println("Login : Password is " + passwd);
         int flag = loginFetch.getFlag();
         System.out.println("Login : Flag is " + flag);
+        redirectAttributes.addFlashAttribute("id",ID);
 
         if (flag == 1) {
             System.out.println("Login: Teacher");
