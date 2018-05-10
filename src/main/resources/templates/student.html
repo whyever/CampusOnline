@@ -28,6 +28,7 @@
                         <option th:each="" th:name="" th:value=""></option>
                     </select>
                 </div>
+                <input type="submit" name="select_tch" value="选择教师">
                 <!--级联select 动态 待解决-->
                 <div class="function">
                     <a class="function_time">选择时间</a>
@@ -77,10 +78,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table_row" th:each="reserve:${list}>
+                            <tr class="table_row" th:each="reserve:${list}"">
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="${reserve.id}"></div>
+                                        <div th:text="${reserve.id}">结果</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
