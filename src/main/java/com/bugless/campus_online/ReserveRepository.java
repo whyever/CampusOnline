@@ -13,16 +13,18 @@ public interface ReserveRepository extends JpaRepository<Reservation, Integer> {
     /*------------------------------------张博凯------------------------------------*/
     List<Reservation> findByTcherID(String tcherID);
 
-    @Query(value = "select r from reservation r where r.tcher_id=?1 and r.resrv_time=?2",nativeQuery = true)
+    @Query(value = "select * from reservation r where r.tcher_id=?1 and r.resrv_time=?2",nativeQuery = true)
     Reservation findByTcherIDAndAndResrvTime(String tcherID,String resrvTime);
 
     @Query(value = "update reservation r set r.resrv_flag=1 where r.tcher_id=?1 and r.resrv_time=?2 ", nativeQuery = true)
     @Modifying
+    @Transactional
     public void updateReservation(String tcherID,String resrvTime);
 
-    @Query(value = "delete from reservation where id=?1 ", nativeQuery = true)
+    @Query(value = "delete from reservation  where tcher_id=?1 and resrv_time=?2 ", nativeQuery = true)
     @Modifying
-    public void delete(int id);
+    @Transactional
+    public void delete(String tcherID,String resrvTime);
     //http://www.cnblogs.com/hawell/p/SpringDataJpa.html
     /*------------------------------------张博凯------------------------------------*/
 

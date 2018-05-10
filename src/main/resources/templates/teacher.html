@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -21,36 +20,20 @@
     </div>
     <div class="main">
         <aside class="guide">
-            <form class="add" method="post">
-                <!--
-                <div class="function" >
-                    <a class="function_tch">选择教师</a>
-                    <br>
-                    <table>
-                        <%
-                        List<> list=app.getteacher();
-                        tch=list.head;
-                        while(list!=null)
-                        {
-                        %>
-                        <tr><%!=tch.name%></tr>
-                        <%
-                        tch=tch.next;
-                        }
-                        %>
-                    </table>
-                    <input type="submit" name="select_tch" value="确认老师">
-                </div>
-                -->
+            <form class="add" method="post" action="/teacher/add" >
                 <div class="function" th:method="get" >
-                    <a class="function_time">选择时间</a>
-                    <br>
-                    <select class="select_bar" th:field="">
-                        <option ></option>
-                    </select>
+                    <a class="function_time">选择时间</a><br>
+                    <a class="function_time_year">年：</a>
+                    <input id="input_year" type="text" name="year"><br>
+                    <a class="function_time_month">月：</a>
+                    <input id="input_month" type="text" name="month"><br>
+                    <a class="function_time_date">日：</a>
+                    <input id="input_date" type="text" name="date"><br>
+                    <a class="function_time_class">节：</a>
+                    <input id="input_class" type="text" name="class"><br>
                 </div>
                 <div class="function">
-                    <input type="submit" name="select_time" value="提交预约" >
+                    <input type="submit" name="select_time" value="提交预约" onclick="add()">
                 </div>
             </form>
 
@@ -91,27 +74,38 @@
                             </thead>
                             <tbody>
                             <!--action 路径不确定-->
-                            <form th:method="post" th:object="${TcherFetch}" th:action="@{/delete}" >
+                            <form th:method="post" th:object="TcherFetch" action="/teacher/delete" >
                                 <!--加get返回预约信息，注入list表格显示-->
                                 <tr class="table_row" th:each="reserve:${list}">
                                     <td class="table_cell">
                                         <div class="cell">
-                                            <div th:text="${MSG}">结果</div>
+                                            <div th:text="${reserve.id}">结果</div>
                                         </div>
                                     </td>
                                     <td class="table_cell">
                                         <div class="cell">
-                                            <div th:text="reserve.stuID" th:value="*{stuID}">StuID</div>
+
+
+                                            <div th:text="${reserve.stuID}">StuID</div>
+
                                         </div>
                                     </td>
                                     <td class="table_cell">
                                         <div class="cell">
-                                            <div th:text="reserve.time" th:value="*{Time}">time</div>
+
+                                            <
+
+                                            <div th:text="${reserve.resrvTime}">time</div>
+
                                         </div>
                                     </td>
                                     <td class="table_cell">
                                         <div class="cell">
-                                            <div th:text="reserve.tchID" th:value="*{tcherID}">TeacherID</div>
+
+                                            <
+
+                                            <div th:text="${reserve.tcherID}">TeacherID</div>
+
                                         </div>
                                     </td>
                                     <td class="table_cell" width="10">
@@ -149,6 +143,28 @@
 </html>
 
 <script>
+
+    function getQueryString(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return r[2];
+    }
+    return null;
+    }
+
+    function add(){
+        var time=new String();
+        time=document.getElementById("input_year").value+
+            document.getElementById("input_month").value+
+            document.getElementById("input_date").value+
+            document.getElementById("input_year").value;
+        var tcherID=getQueryString(tcherID);//根据url参数格式改
+        var function_add="<%=add(TcherFetch(time,tcherID))%>";
+        alert(function_add);
+    }
+
 
 </script>
 
