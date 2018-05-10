@@ -77,25 +77,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table_row" th:each="" th:with="num=0">
+                            <tr class="table_row" th:each="reserve:${list}>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text=""></div>
+                                        <div th:text="${reserve.id}"></div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="">学生ID</div>
+                                        <div th:text="${reserve.stuID}">学生ID</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="">预约时间</div>
+                                        <div th:text="${reserve.resrvTime}">预约时间</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="">教师ID</div>
+                                        <div th:text="${reserve.tcherID}">教师ID</div>
                                     </div>
                                 </td>
                                 <td class="table_cell" width="10">
