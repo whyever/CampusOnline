@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Iterator;
 import java.util.List;
 import java.lang.*;
+import java.util.ListIterator;
 
 @Controller
 @RequestMapping("/student")
@@ -24,20 +26,56 @@ public class StuController {
         this.reserveRepository = reserveRepo;
     }
 
-    //获取当前可预约教师以及时间
+    //预约时间中的日期处理
+    public String timeHandle(String time) {
+        String timeStr = time.substring(time.length()-1,time.length());
+        String date = time.substring(0,time.length()-2);
+        int num = 1;
+        try {
+            num = Integer.parseInt(timeStr);
+        }catch(NumberFormatException e) {
+            e.printStackTrace();
+        }
+        switch(num) {
+            case 1: { date += " " + "8:00-9:45"; break; }
+            case 2: { date += " " + "10:05-11:50"; break; }
+            case 3: { date += " " + "14:00-15:45"; break; }
+            case 4: { date += " " + "16:05-17:50"; break; }
+            case 5: { date += " " + "19:00-21:00"; break; }
+        }
+        System.out.println("timeHandle : "+date);
+        return date;
+    }
+
+    //获取当前可预约项
     @RequestMapping(method = RequestMethod.GET)
     public String getReserve(@ModelAttribute("id")String ID, Model model) {
-        //接收从LoginController传过来的id
-        current_id = ID;
+        current_id = ID;    //接收从LoginController传过来的id
         System.out.println("StuController : "+current_id);
-        //reserv_flag为0代表可以预约
-        List<Reservation> availableReserve = reserveRepository.findByResrvFlag(0);
-        System.out.println("StuController : GET");
-        model.addAttribute("stuReserves",availableReserve);
-        List<Reservation> currentReserve  = reserveRepository.findByStuID(ID);
-        model.addAttribute("currentReserves", currentReserve);
-        System.out.println("StuController : Get the reservation info");
 
+        //处理可预约项
+        List<Reservation> availableReserve = reserveRepository.findByResrvFlag(0);    //reserv_flag为0代表可以预约
+        System.out.println("StuController : FindAvailableReserveDone");
+        for(Reservation reservation : availableReserve) {
+            String timeTemp=reservation.getResrvTime();
+            timeTemp=timeHandle(timeTemp);
+            reservation.setResrvTime(timeTemp);
+        }
+        model.addAttribute("stuReserves",availableReserve);
+        System.out.println("StuController : FinishedAvailableReserve");
+
+        //处理已有预约
+        List<Reservation> currentReserve = reserveRepository.findByStuID(ID);
+        System.out.println("StuController : FindCurrentReserveDone");
+        for(Reservation reservation : currentReserve) {
+            String timeTemp=reservation.getResrvTime();
+            timeTemp=timeHandle(timeTemp);
+            reservation.setResrvTime(timeTemp);
+        }
+        model.addAttribute("currentReserves", currentReserve);
+        System.out.println("StuController : FinishedCurrentReserve");
+
+        System.out.println("StuController : Finished GET");
         return "student";
     }
 
