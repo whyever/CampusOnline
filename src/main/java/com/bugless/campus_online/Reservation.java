@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     //每个表项的序号
     @Column(name = "id" , nullable=false)

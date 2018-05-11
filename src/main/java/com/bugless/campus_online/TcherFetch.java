@@ -17,6 +17,9 @@ public class TcherFetch {
     //默认老师能增加可预约（0） 删除某预约（1/0） 更改未被续约(0) 查询本人(0/1)
     private int flag;
     private String stuID;
+    public TcherFetch(String time){
+        setTime(time);
+    }
 
     public String getStuID() {
         return stuID;

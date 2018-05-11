@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.lang.*;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/teacher")
-public class TcherController {
+public class TcherController extends HttpServlet {
 
     @Autowired
     private ReserveRepository reserveRepository;
@@ -29,16 +31,22 @@ public class TcherController {
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public String add(@Valid TcherFetch tcherFetch)
+    public String add(HttpServletRequest request)
     {
+        System.out.println("add method "+tcherID);
         Reservation reservation=new Reservation();
-        //获取前端数据,每个页面增加fetch
-        tcherID=tcherFetch.getTcherID();
-        Time=tcherFetch.getTime();
+        String year=request.getParameter("year");
+        String month=request.getParameter("month");
+        String date=request.getParameter("date");
+        String classes=request.getParameter("classes");
+        Time=year+"."+month+"."+date+"."+classes;
+        System.out.print(Time);
+        reservation.setId(1000);
         reservation.setTcherID(tcherID);
         reservation.setResrvTime(Time);
         reservation.setResrvFlag(0);
         reservation.setStuID(null);
+        reservation.setTag(1);
         reserveRepository.save(reservation);
         return "teacher";
     }
@@ -48,17 +56,17 @@ public class TcherController {
     public String select(Model model, @ModelAttribute("id") String ID){
         tcherID=ID;
         List<Reservation> reservations=reserveRepository.findByTcherID(tcherID);
-        List<Reserve4select> reserve4selects=new ArrayList<Reserve4select>();
-        Reserve4select reserve4select=new Reserve4select();
-            for(Reservation res:reservations)
-            {
-                reserve4select.setTcherID(res.getTcherID());
-                reserve4select.setStuID(res.getStuID());
-                reserve4select.setResrvFlag(res.getResrvFlag());
-                reserve4select.setResrvTime(res.getResrvTime());
-                reserve4selects.add(reserve4select);
-            }
-        model.addAttribute("list",reserve4selects);
+//        List<Reserve4select> reserve4selects=new ArrayList<Reserve4select>();
+//        Reserve4select reserve4select=new Reserve4select();
+//            for(Reservation res:reservations)
+//            {
+//                reserve4select.setTcherID(res.getTcherID());
+//                reserve4select.setStuID(res.getStuID());
+//                reserve4select.setResrvFlag(res.getResrvFlag());
+//                reserve4select.setResrvTime(res.getResrvTime());
+//                reserve4selects.add(reserve4select);
+//            }
+        model.addAttribute("reserveList",reservations);
 
         return "teacher";
     }

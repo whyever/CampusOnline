@@ -9,10 +9,18 @@ public class Reserve4select {
 
     private String resrvTime;
 
-    private int resrvFlag;
+    private int id;
 
     public String getStuID() {
         return stuID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setStuID(String stuID) {
@@ -35,11 +43,5 @@ public class Reserve4select {
         this.resrvTime = resrvTime;
     }
 
-    public int getResrvFlag() {
-        return resrvFlag;
-    }
 
-    public void setResrvFlag(int resrvFlag) {
-        this.resrvFlag = resrvFlag;
-    }
 }

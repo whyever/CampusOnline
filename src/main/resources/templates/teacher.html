@@ -21,7 +21,7 @@
     <div class="main">
         <aside class="guide">
             <form class="add" method="post" action="/teacher/add" >
-                <div class="function" th:method="get" >
+                <div class="function" >
                     <a class="function_time">选择时间</a><br>
                     <a class="function_time_year">年：</a>
                     <input id="input_year" type="text" name="year"><br>
@@ -30,10 +30,10 @@
                     <a class="function_time_date">日：</a>
                     <input id="input_date" type="text" name="date"><br>
                     <a class="function_time_class">节：</a>
-                    <input id="input_class" type="text" name="class"><br>
+                    <input id="input_class" type="text" name="classes"><br>
                 </div>
                 <div class="function">
-                    <input type="submit" name="select_time" value="提交预约" onclick="add()">
+                    <input type="submit" name="select_time" value="提交预约" onclick="javascript:Window.location.reload()" >
                 </div>
             </form>
 
@@ -42,6 +42,7 @@
             <div class="toolbar">
                 <a>预约信息</a>
             </div>
+            <iframe></iframe>
             <form method="get">
                 <div class="table">
                     <div class="table_header">
@@ -73,18 +74,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <!--action 路径不确定-->
-                            <form th:method="post" th:object="TcherFetch" action="/teacher/delete" >
+                            <!--action 路径不确定--&&注释了下行>
+                            <!--form th:method="post" th:object="TcherFetch" action="/teacher/delete" -->
+                            <form>
                                 <!--加get返回预约信息，注入list表格显示-->
-                                <tr class="table_row" th:each="reserve:${list}">
+                                <tr class="table_row" th:each="reserve: ${reserveList}">
                                     <td class="table_cell">
                                         <div class="cell">
-                                            <div th:text="${reserve.id}">结果</div>
+                                            <div th:text="${reserve.resrvFlag}">结果</div>
                                         </div>
                                     </td>
                                     <td class="table_cell">
                                         <div class="cell">
-
 
                                             <div th:text="${reserve.stuID}">StuID</div>
 
@@ -93,16 +94,12 @@
                                     <td class="table_cell">
                                         <div class="cell">
 
-                                            <
-
                                             <div th:text="${reserve.resrvTime}">time</div>
 
                                         </div>
                                     </td>
                                     <td class="table_cell">
                                         <div class="cell">
-
-                                            <
 
                                             <div th:text="${reserve.tcherID}">TeacherID</div>
 
@@ -156,12 +153,11 @@
 
     function add(){
         var time=new String();
-        time=document.getElementById("input_year").value+
-            document.getElementById("input_month").value+
-            document.getElementById("input_date").value+
+        time=document.getElementById("input_year").value+"."
+            document.getElementById("input_month").value+"."
+            document.getElementById("input_date").value+"."
             document.getElementById("input_year").value;
-        var tcherID=getQueryString(tcherID);//根据url参数格式改
-        var function_add="<%=add(TcherFetch(time,tcherID))%>";
+        var function_add="<%add(TcherFetch(time))%>";
         alert(function_add);
     }
 
