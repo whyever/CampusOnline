@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -27,14 +29,14 @@ public class LoginController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String loginPOST(LoginFetch loginFetch, RedirectAttributes redirectAttributes) {
+    public String loginPOST(LoginFetch loginFetch, HttpSession httpSession) {
         String ID = loginFetch.getID();
         System.out.println("Login : ID is " + ID);
         String passwd = loginFetch.getPasswd();
         System.out.println("Login : Password is " + passwd);
         int flag = loginFetch.getFlag();
         System.out.println("Login : Flag is " + flag);
-        redirectAttributes.addFlashAttribute("id",ID);
+        httpSession.setAttribute("id", ID);
 
         if (flag == 1) {
             System.out.println("Login: Teacher");
