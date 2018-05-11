@@ -53,26 +53,30 @@ public class StuController {
     public String getReserve(Model model, HttpSession httpSession) {
         current_id=httpSession.getAttribute("id").toString();   //接收从LoginController传过来的id,使用session的方法
         System.out.println("StuController : "+current_id);
-
         //处理可预约项
         List<Reservation> availableReserve = reserveRepository.findByResrvFlag(0);    //reserv_flag为0代表可以预约
         System.out.println("StuController : FindAvailableReserveDone");
+
         for(Reservation reservation : availableReserve) {
             String timeTemp=reservation.getResrvTime();
-            timeTemp=timeHandle(timeTemp);
-            reservation.setResrvTime(timeTemp);
+            String tcherId=reservation.getTcherID();
+            //timeTemp=timeHandle(timeTemp);
+            reservation.setResrvTime(tcherId+" "+timeTemp);
         }
+
         model.addAttribute("stuReserves",availableReserve);
         System.out.println("StuController : FinishedAvailableReserve");
 
         //处理已有预约
         List<Reservation> currentReserve = reserveRepository.findByStuID(current_id);
         System.out.println("StuController : FindCurrentReserveDone");
+        /*
         for(Reservation reservation : currentReserve) {
             String timeTemp=reservation.getResrvTime();
             timeTemp=timeHandle(timeTemp);
             reservation.setResrvTime(timeTemp);
         }
+        */
         model.addAttribute("currentReserves", currentReserve);
         System.out.println("StuController : FinishedCurrentReserve");
 
@@ -86,11 +90,11 @@ public class StuController {
 
     //提交预约
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public String submitReserve(StuFetch stuFetch, HttpSession httpSession) {
+    public String submitReserve(String submitString, HttpSession httpSession) {
         current_id = httpSession.getAttribute("id").toString();
-        String availaTcherID = stuFetch.getAvailableTcherID();
+        String availaTcherID = submitString.substring(0,8);
         System.out.println("StuController-submit-tcherid : "+availaTcherID);
-        String availaTime = stuFetch.getAvailableTime();
+        String availaTime = submitString.substring(10,submitString.length());
         System.out.println("StuController-submit-tcherid : "+availaTime);
         //提交预约即在已有表项中写入学生学号及预约标记
         reserveRepository.submitReserve(current_id,1,availaTcherID,availaTime);
@@ -99,6 +103,7 @@ public class StuController {
         return "student";
     }
 
+    /*
     //编辑当前预约
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editReserve(StuFetch stuFetch, HttpSession httpSession) {
@@ -111,7 +116,7 @@ public class StuController {
         System.out.println("StuController : Modified the reservation");
 
         return "student";
-    }
+    }*/
 
     //删除当前预约
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
