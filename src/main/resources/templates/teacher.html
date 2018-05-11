@@ -84,28 +84,22 @@
                                     <form method="post" action="/teacher/delete">
                                         <td class="table_cell">
                                             <div class="cell">
-                                                <div th:text="${reserve.resrvFlag}">结果</div>
+                                                <div th:text="${reserve.resrvFlag}" name="resrvFlag">结果</div>
                                             </div>
                                         </td>
                                         <td class="table_cell">
                                             <div class="cell">
-
-                                                <div th:text="${reserve.stuID}">StuID</div>
-
+                                                <div th:text="${reserve.stuID}" name="stuID">StuID</div>
                                             </div>
                                         </td>
                                         <td class="table_cell">
                                             <div class="cell">
-
-                                                <div th:text="${reserve.resrvTime}">time</div>
-
+                                                <div th:text="${reserve.resrvTime}" name="resrvTime">time</div>
                                             </div>
                                         </td>
                                         <td class="table_cell">
                                             <div class="cell">
-
-                                                <div th:text="${reserve.tcherID}">TeacherID</div>
-
+                                                <div th:text="${reserve.tcherID}" name="tcherID">TeacherID</div>
                                             </div>
                                         </td>
                                         <td class="table_cell" width="10">

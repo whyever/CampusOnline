@@ -21,9 +21,6 @@
     <div class="main">
 
         <aside class="guide">
-            <!--级联选择，不确定是否在第一个按钮会刷新丢失当前页面值-->
-            <!--需要post方法selectTime，提交选择的教师ID，时间，当前学生ID-->
-            <form class="add" method="post" action="/student/selectTime">
                 <!--需要post 方法selectTeacher，提交选择的教师ID,递交获取可预约时间的get方法-->
                 <form class="add" method="post" th:method="post" action="/student/selectTeacher">
                     <div class="add_select" >
@@ -38,22 +35,6 @@
                         <input type="submit" name="select_tch" value="选择教师">
                     </div>
                 </form>
-
-                <div class="function">
-                    <a class="function_time">选择时间</a>
-                    <br>
-                    <select class="select_bar">
-                        <!--需要get方法，获取该老师所有可预约时间-->
-                        <option th:each="time:${stuReserves}" th:text="${time.resrvTime}" th:value="${time.resrvTime}"></option>
-                    </select>
-                </div>
-                <div class="function">
-                    <input type="submit" name="select_time" value="提交预约" >
-                </div>
-
-            </form>
-
-
         </aside>
 
 
@@ -236,7 +217,7 @@
         padding-right: 3px;
     }
     .add{
-        height: 50%;
+        height: 100%;
     }
     .add_select{
         height: 80%;
