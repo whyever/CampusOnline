@@ -31,7 +31,7 @@
                         <br>
                         <select class="select_bar">
                             <!--需要get方法，获取所有老师-->
-                            <option th:each="tch:${tchlist}" th:name="${tch.id}" th:value="${tch.id}"></option>
+                            <option th:each="tch:${stuReserves}" th:text="${tch.tcherID}" th:value="${tch.tcherID}"></option>
                         </select>
                     </div>
                     <div class="add_commit">
@@ -39,17 +39,17 @@
                     </div>
                 </form>
 
-                    <div class="function">
-                        <a class="function_time">选择时间</a>
-                        <br>
-                        <select class="select_bar">
-                            <!--需要get方法，获取该老师所有可预约时间-->
-                            <option th:each="time:${list}" th:name="${time}" th:value="${time}"></option>
-                        </select>
-                    </div>
-                    <div class="function">
-                        <input type="submit" name="select_time" value="提交预约" >
-                    </div>
+                <div class="function">
+                    <a class="function_time">选择时间</a>
+                    <br>
+                    <select class="select_bar">
+                        <!--需要get方法，获取该老师所有可预约时间-->
+                        <option th:each="time:${stuReserves}" th:text="${time.resrvTime}" th:value="${time.resrvTime}"></option>
+                    </select>
+                </div>
+                <div class="function">
+                    <input type="submit" name="select_time" value="提交预约" >
+                </div>
 
             </form>
 
