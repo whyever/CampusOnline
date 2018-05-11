@@ -32,30 +32,25 @@ public class TcherController extends HttpServlet {
     {
         this.reserveRepository=reserveRepo;
     }
+    //时间显示处理
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public String add(HttpServletRequest request,Model model)
     {
-        System.out.println("add method "+tcherID);
+        System.out.println("teacher:"+tcherID+"add campus");
         Reservation reservation=new Reservation();
         String year=request.getParameter("year");
         String month=request.getParameter("month");
         String date=request.getParameter("date");
         String classes=request.getParameter("classes");
-        Time=year+"."+month+"."+date+"."+classes;
+        Time=year+"-"+month+"-"+date+"-"+classes;
         System.out.print(Time);
         reservation.setId(1000);
         reservation.setTcherID(tcherID);
         reservation.setResrvTime(Time);
         reservation.setResrvFlag(0);
         reservation.setStuID(null);
-        //reservation.setTag(1);
         reserveRepository.save(reservation);
-        /*HttpSession session= request.getSession();
-        tcherID=session.getAttribute("id").toString();
-        List<Reservation> reservations=reserveRepository.findByTcherID(tcherID);
-        model.addAttribute("reserveList",reservations);
-        */
         return "redirect:/teacher";
     }
 
@@ -69,7 +64,7 @@ public class TcherController extends HttpServlet {
 
         return "teacher";
     }
-    //修改此项为不可预约
+    /*修改此项为不可预约
     @RequestMapping(value="/update" , method=RequestMethod.POST)
     public String update(TcherFetch tcherFetch)
     {
@@ -79,19 +74,17 @@ public class TcherController extends HttpServlet {
         reserveRepository.updateReservation(tcherID,Time);
         return "teacher" ;
 
-    }
+    }*/
 
-    //首先测试这个吧
     @RequestMapping(value="/delete" ,method = RequestMethod.POST)
     public String delete(HttpServletRequest request, Model model)
     {
         HttpSession session=request.getSession();
         tcherID=session.getAttribute("id").toString();
-
-
+        Time=request.getParameter("reserve.resrvTime").toString();
+        System.out.println("delete message"+tcherID+Time);
         reserveRepository.delete(tcherID,Time);
-
-        return "teacher";
+        return "redirect:/teacher";
     }
 
 }

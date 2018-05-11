@@ -17,7 +17,7 @@ public class Reservation {
     @Column(name = "tcher_id" ,nullable = false)
     private String tcherID;
 
-    //预约时间,格式为2018.05.07-08:00~09:45
+    //预约时间,格式为2018-05-07-08:00~09:45
     @Column(name = "resrv_time",nullable = false)
     private String resrvTime;
 
