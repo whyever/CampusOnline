@@ -19,32 +19,43 @@
         </span>
     </div>
     <div class="main">
-        <!--
+
         <aside class="guide">
-            <form class="add" method="post" th:method="post" th:object="Reservation">
-                <div class="function" >
-                    <a class="function_tch">选择教师</a>
-                    <br>
-                    <select class="select_bar" th:field="tcherID">
-                        <option th:each="" th:name="" th:value=""></option>
-                    </select>
-                </div>
-                <input type="submit" name="select_tch" value="选择教师">
-                <!--级联select 动态 待解决
+            <!--级联选择，不确定是否在第一个按钮会刷新丢失当前页面值-->
+            <!--需要post方法selectTime，提交选择的教师ID，时间，当前学生ID-->
+            <form class="add" method="post" action="/student/selectTime">
+                <!--需要post 方法selectTeacher，提交选择的教师ID,递交获取可预约时间的get方法-->
+                <form class="add" method="post" th:method="post" action="/student/selectTeacher">
+                    <div class="add_select" >
+                        <a class="function_tch">选择教师</a>
+                        <br>
+                        <select class="select_bar">
+                            <!--需要get方法，获取所有老师-->
+                            <option th:each="tch:${stuReserves}" th:text="${tch.tcherID}" th:value="${tch.tcherID}"></option>
+                        </select>
+                    </div>
+                    <div class="add_commit">
+                        <input type="submit" name="select_tch" value="选择教师">
+                    </div>
+                </form>
+
                 <div class="function">
                     <a class="function_time">选择时间</a>
                     <br>
-                    <select class="select_bar" th:field="resrvTime">
-                        <option th:each="" th:name="" th:value=""></option>
+                    <select class="select_bar">
+                        <!--需要get方法，获取该老师所有可预约时间-->
+                        <option th:each="time:${stuReserves}" th:text="${time.resrvTime}" th:value="${time.resrvTime}"></option>
                     </select>
                 </div>
                 <div class="function">
                     <input type="submit" name="select_time" value="提交预约" >
                 </div>
+
             </form>
 
+
         </aside>
-        -->
+
 
         <div class="content">
             <div class="toolbar">
@@ -104,7 +115,6 @@
                                 </td>
                                 <td class="table_cell" width="10">
                                     <div class="cell" align="center">
-                                        <button type="button" class="button" name="edit">编辑</button>
                                         <button type="button" class="button" name="delete">删除</button>
                                     </div>
                                 </td>
@@ -226,6 +236,12 @@
         padding-right: 3px;
     }
     .add{
-        height: 100%;
+        height: 50%;
+    }
+    .add_select{
+        height: 80%;
+    }
+    .add_commit{
+        height: 20%;
     }
 </style>
