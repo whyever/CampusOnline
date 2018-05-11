@@ -28,13 +28,49 @@
                 <div class="function" >
                     <a class="function_time">选择时间</a><br>
                     <a class="function_time_year">年：</a>
-                    <input id="input_year" type="text" name="year"><br>
+                    <select id="input_year" type="text" name="year">
+                        <option th:text="2018" th:value="2018"></option>
+                        <option th:text="2019" th:value="2019"></option>
+                        <option th:text="2020" th:value="2020"></option>
+                    </select>
+                    <br>
                     <a class="function_time_month">月：</a>
-                    <input id="input_month" type="text" name="month"><br>
+                    <select id="input_month" type="text" name="month">
+                        <option th:text="1" th:value="1"></option>
+                        <option th:text="2" th:value="2"></option>
+                        <option th:text="3" th:value="3"></option>
+                        <option th:text="4" th:value="4"></option>
+                        <option th:text="5" th:value="5"></option>
+                        <option th:text="6" th:value="6"></option>
+                        <option th:text="7" th:value="7"></option>
+                        <option th:text="8" th:value="8"></option>
+                        <option th:text="9" th:value="9"></option>
+                        <option th:text="10" th:value="10"></option>
+                        <option th:text="11" th:value="11"></option>
+                        <option th:text="12" th:value="12"></option>
+                    </select>
+                    <br>
+
                     <a class="function_time_date">日：</a>
-                    <input id="input_date" type="text" name="date"><br>
+                    <select id="input_date" type="text" name="date">
+                        <script type="text/javascript">
+                            for (var i=1;i<32;i++){
+                                document.write("<option value=\""+i.toString()+"\">"+i.toString()+"</option>")
+                                //document.write("<option th:text=\""+i.toString()+"\" th:value=\""+i.toString()+"\"></option>");
+                            }
+                        </script>
+                    </select>
+                    <br>
+
                     <a class="function_time_class">节：</a>
-                    <input id="input_class" type="text" name="classes"><br>
+                    <select id="input_class" type="text" name="classes">
+                        <option value="08:00~09:45">08:00~09:45</option>
+                        <option value="10:05~11:50">10:05~11:50</option>
+                        <option value="14:00~15:45">14:00~15:45</option>
+                        <option value="16:05~17:50">16:05~17:50</option>
+                        <option value="19:00~21:00">19:00~21:00</option>
+                    </select>
+                    <br>
                 </div>
                 <div class="function">
                     <input type="submit" id="select_time" value="提交预约" onclick="javascript:Window.location.reload()" >
