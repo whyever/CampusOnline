@@ -17,7 +17,7 @@ public class Reservation {
     @Column(name = "tcher_id" ,nullable = false)
     private String tcherID;
 
-    //预约时间,格式为2018.05.07.1
+    //预约时间,格式为2018-05-07-08:00~09:45
     @Column(name = "resrv_time",nullable = false)
     private String resrvTime;
 
@@ -28,10 +28,6 @@ public class Reservation {
     //学生ID
     @Column(name = "stu_id")
     private String stuID;
-
-    //为1,用于提取表中数据
-    @Column(name = "tag")
-    private int tag;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -47,7 +43,4 @@ public class Reservation {
 
     public String getStuID() { return stuID; }
     public void setStuID(String stuID) { this.stuID = stuID; }
-
-    public int getTag() { return tag; }
-    public void setTag(int tag) { this.tag = tag; }
 }
