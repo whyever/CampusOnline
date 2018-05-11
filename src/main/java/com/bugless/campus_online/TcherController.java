@@ -49,7 +49,7 @@ public class TcherController extends HttpServlet {
         reservation.setResrvTime(Time);
         reservation.setResrvFlag(0);
         reservation.setStuID(null);
-        reservation.setTag(1);
+        //reservation.setTag(1);
         reserveRepository.save(reservation);
         /*HttpSession session= request.getSession();
         tcherID=session.getAttribute("id").toString();
