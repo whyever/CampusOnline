@@ -8,6 +8,15 @@
     <script src="//cdn.bootcss.com/vue/2.3.0/vue.min.js"></script>
     <script src="//cdn.bootcss.com/element-ui/1.3.0/index.js"></script>
     <script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        function setCookie(c_name,value,expiredays)
+        {
+            $.cookie("username",c_name,{expires:7});
+            $.cookie("password",value,{expires:7});
+        }
+    </script>
 </head>
 
 <body>
@@ -24,7 +33,7 @@
                 <input type="password" name="passwd" ><br>
                 <input type="radio" name="flag" value="1">老师
                 <input type="radio" name="flag" value="0" checked>学生<br>
-                <input class="button" type="submit" value="登录">
+                <input id="login_button" class="button" type="submit" value="登录" onclick="setCookie(ID,passwd,7)">
             </form>
         </div>
     </div>
