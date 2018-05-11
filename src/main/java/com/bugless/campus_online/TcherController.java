@@ -1,6 +1,7 @@
 package com.bugless.campus_online;
 
 //import com.sun.org.apache.xpath.internal.operations.String;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.lang.*;
 import java.util.ArrayList;
@@ -25,13 +27,14 @@ public class TcherController extends HttpServlet {
     //教师可看的预约属性
     private String tcherID;
     private String Time;
+    private String passwd;
     public TcherController(ReserveRepository reserveRepo)
     {
         this.reserveRepository=reserveRepo;
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public String add(HttpServletRequest request)
+    public String add(HttpServletRequest request,Model model)
     {
         System.out.println("add method "+tcherID);
         Reservation reservation=new Reservation();
@@ -48,24 +51,20 @@ public class TcherController extends HttpServlet {
         reservation.setStuID(null);
         reservation.setTag(1);
         reserveRepository.save(reservation);
-        return "teacher";
+        /*HttpSession session= request.getSession();
+        tcherID=session.getAttribute("id").toString();
+        List<Reservation> reservations=reserveRepository.findByTcherID(tcherID);
+        model.addAttribute("reserveList",reservations);
+        */
+        return "redirect:/teacher";
     }
 
     //教师进入后直接显示预约情况
     @RequestMapping(method = RequestMethod.GET)
-    public String select(Model model, @ModelAttribute("id") String ID){
-        tcherID=ID;
+    public String select(Model model, HttpServletRequest request){
+        HttpSession session= request.getSession();
+        tcherID=session.getAttribute("id").toString();
         List<Reservation> reservations=reserveRepository.findByTcherID(tcherID);
-//        List<Reserve4select> reserve4selects=new ArrayList<Reserve4select>();
-//        Reserve4select reserve4select=new Reserve4select();
-//            for(Reservation res:reservations)
-//            {
-//                reserve4select.setTcherID(res.getTcherID());
-//                reserve4select.setStuID(res.getStuID());
-//                reserve4select.setResrvFlag(res.getResrvFlag());
-//                reserve4select.setResrvTime(res.getResrvTime());
-//                reserve4selects.add(reserve4select);
-//            }
         model.addAttribute("reserveList",reservations);
 
         return "teacher";
@@ -84,18 +83,10 @@ public class TcherController extends HttpServlet {
 
     //首先测试这个吧
     @RequestMapping(value="/delete" ,method = RequestMethod.POST)
-    public String delete(@Valid TcherFetch tcherFetch, Model model, BindingResult result)
+    public String delete(HttpServletRequest request, Model model)
     {
-        System.out.println(tcherID=tcherFetch.getTcherID());
-        System.out.println(Time=tcherFetch.getTime());
-        if(result.hasErrors())
-        {
-            model.addAttribute("MSG","error");
-        }
-        else
-        {
-            model.addAttribute("MSG","right");
-        }
+        HttpSession session=request.getSession();
+        tcherID=session.getAttribute("id").toString();
 
 
         reserveRepository.delete(tcherID,Time);
