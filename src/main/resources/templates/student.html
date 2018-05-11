@@ -19,21 +19,23 @@
         </span>
     </div>
     <div class="main">
+        <!--
         <aside class="guide">
-            <form class="add" method="post" th:method="post" th:object="">
+            <form class="add" method="post" th:method="post" th:object="Reservation">
                 <div class="function" >
                     <a class="function_tch">选择教师</a>
                     <br>
-                    <select class="select_bar" th:field="">
+                    <select class="select_bar" th:field="tcherID">
                         <option th:each="" th:name="" th:value=""></option>
                     </select>
                 </div>
-                <!--级联select 动态 待解决-->
+                <input type="submit" name="select_tch" value="选择教师">
+                <!--级联select 动态 待解决
                 <div class="function">
                     <a class="function_time">选择时间</a>
                     <br>
-                    <select class="select_bar" th:field="">
-                        <option th:each="" th:name="time.ID" th:value="time"></option>
+                    <select class="select_bar" th:field="resrvTime">
+                        <option th:each="" th:name="" th:value=""></option>
                     </select>
                 </div>
                 <div class="function">
@@ -42,6 +44,8 @@
             </form>
 
         </aside>
+        -->
+
         <div class="content">
             <div class="toolbar">
                 <a>预约信息</a>
@@ -77,10 +81,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table_row" th:each="reserve:${list}>
+                            <tr class="table_row" th:each="reserve:${currentReserves}">
                                 <td class="table_cell">
                                     <div class="cell">
-                                        <div th:text="${reserve.id}"></div>
+                                        <div th:text="${reserve.id}">结果</div>
                                     </div>
                                 </td>
                                 <td class="table_cell">

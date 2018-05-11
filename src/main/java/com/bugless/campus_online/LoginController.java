@@ -54,7 +54,7 @@ public class LoginController {
                 return "redirect:/student";
             }
         }
-        System.out.println("Login: return to login page");
+        System.out.println("Login : return to login page");
         return "redirect:/login";
     }
 }

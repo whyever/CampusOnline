@@ -31,19 +31,23 @@ public interface ReserveRepository extends JpaRepository<Reservation, Integer> {
 
     /*------------------------------------定理------------------------------------*/
     List<Reservation> findByResrvFlag(int reserv_flag);
+    List<Reservation> findByStuID(String stuID);
     //学生提交预约
     @Query(value = "update reservation r set r.stu_id = ?1 and r.resrv_flag = ?2 where r.tcher_id = ?3 and r.resrv_time = ?4", nativeQuery = true)
     @Modifying
+    @Transactional
     public void submitReserve(String stuID, int resrv_flag, String tcher_id, String resrv_time);
 
     //学生编辑预约
     @Query(value = "update reservation r set r.tcher_id = ?1 and r.resrv_time = ?2 where r.stu_id = ?3", nativeQuery = true)
     @Modifying
+    @Transactional
     public void editReserve(String tcher_id,String resrv_time,String stu_id);
 
     //学生删除预约
-    @Query(value = "delete from reservation r where stu_id = ?1", nativeQuery = true)
+    @Query(value = "delete from reservation where stu_id = ?1", nativeQuery = true)
     @Modifying
+    @Transactional
     public void deleteReserve(String stu_id);
     /*------------------------------------定理------------------------------------*/
 }
