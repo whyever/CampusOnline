@@ -81,7 +81,7 @@ public class TcherController extends HttpServlet {
     {
         HttpSession session=request.getSession();
         tcherID=session.getAttribute("id").toString();
-        Time=request.getParameter("reserve.resrvTime").toString();
+        Time=request.getParameter("resrvtime".toString());
         System.out.println("delete message"+tcherID+Time);
         reserveRepository.delete(tcherID,Time);
         return "redirect:/teacher";
