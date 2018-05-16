@@ -65,18 +65,18 @@ public class TcherController extends HttpServlet {
         model.addAttribute("reserveList",reservations);
         return "teacher";
     }
-    /*修改此项为不可预约
-    @RequestMapping(value="/update" , method=RequestMethod.POST)
-    public String update(TcherFetch tcherFetch)
+    //修改密码
+    @RequestMapping(value="/update" , method=RequestMethod.GET)
+    public String update(HttpServletRequest request)
     {
-        tcherID=tcherFetch.getTcherID();
-        Time=tcherFetch.getTime();
+        HttpSession session= request.getSession();
+        tcherID=session.getAttribute("id").toString();
+        passwd=request.getParameter("passwd");
+        tcherLoginRepository.update(tcherID,passwd);
+        return "redirect:/login" ;
 
-        reserveRepository.updateReservation(tcherID,Time);
-        return "teacher" ;
-
-    }*/
-
+    }
+    //删除
     @RequestMapping(value="/delete/{id}" ,method = RequestMethod.GET)
     public String delete(HttpServletRequest request, Model model,@PathVariable(value = "id") String id)
     {

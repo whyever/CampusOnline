@@ -18,14 +18,18 @@
         <span class="logo">
             <span class="font" >教师界面</span>
             <span class="changepwd">
-                <a onclick="changePassword()">修改密码</a>
+                <a class="changepwd_a" onclick="changePassword()">修改密码</a>
                 <script type="text/javascript">
                     function changePassword() {
                         var passWord=prompt("输入新密码：","");
                         var passWordAgain=prompt("再次输入新密码：","");
                         if(passWord==passWordAgain)
                         {
-
+                            var xhr=new XMLHttpRequest();//新建一个XMLHttpRequest对象
+                            url="/teacher/update?passwd="+passWord;
+                            xhr.open("get",url,true);//初始化请求
+                            xhr.send(null);
+                            alert("success");
                         }
                         else
                         {
@@ -35,7 +39,22 @@
                 </script>
             </span>
             <span class="exit_login">
-                <a href="/login">退出登录</a>
+                <a class="exit_login_href" href="/login" >退出登录</a>
+                <script type="text/javascript">
+                    function exitlogin() {
+                        $.ajax({
+                            url:'/student/logout',
+                            type:'post',
+                            async : false,
+                            success : function(msg) {
+                                window.location.replace("/login");
+                            },
+                            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                                alert("error");
+                            }
+                        })
+                    }
+                </script>
             </span>
         </span>
         <span class="userinfo">
@@ -336,6 +355,30 @@
         left: 90%;
         color: white;
         font-size: 14px;
+    }
+    .btn-info{
+        text-decoration: none;
+    }
+    .btn-info:link{
+        color: blue;
+    }
+    .btn-info:active{
+        color: aqua;
+    }
+    .exit_login_href{
+        text-decoration: none;
+    }
+    .exit_login_href:link{
+        color: white;
+    }
+    .exit_login_href:active{
+        color: aqua;
+    }
+    .changepwd{
+        cursor: pointer;
+    }
+    .exit_login{
+        cursor: pointer;
     }
 </style>
 
