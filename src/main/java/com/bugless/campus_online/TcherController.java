@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,15 +23,18 @@ public class TcherController extends HttpServlet {
 
     @Autowired
     private ReserveRepository reserveRepository;
+    private TcherLoginRepository tcherLoginRepository;
     //教师可看的预约属性
     private String tcherID;
     private String Time;
     private String passwd;
-    public TcherController(ReserveRepository reserveRepo)
+    public TcherController(ReserveRepository reserveRepo,TcherLoginRepository tloginRepo)
     {
+
         this.reserveRepository=reserveRepo;
+        this.tcherLoginRepository=tloginRepo;
+
     }
-    //时间显示处理
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public String add(HttpServletRequest request,Model model)
@@ -61,7 +63,6 @@ public class TcherController extends HttpServlet {
         tcherID=session.getAttribute("id").toString();
         List<Reservation> reservations=reserveRepository.findByTcherID(tcherID);
         model.addAttribute("reserveList",reservations);
-
         return "teacher";
     }
     /*修改此项为不可预约
@@ -76,14 +77,27 @@ public class TcherController extends HttpServlet {
 
     }*/
 
-    @RequestMapping(value="/delete" ,method = RequestMethod.POST)
-    public String delete(HttpServletRequest request, Model model)
+    @RequestMapping(value="/delete/{id}" ,method = RequestMethod.GET)
+    public String delete(HttpServletRequest request, Model model,@PathVariable(value = "id") String id)
     {
         HttpSession session=request.getSession();
         tcherID=session.getAttribute("id").toString();
-        Time=request.getParameter("resrvtime".toString());
-        System.out.println("delete message"+tcherID+Time);
-        reserveRepository.delete(tcherID,Time);
+
+        //Time=request.getParameter("resrvtime".toString());
+        //int ID =Integer.parseInt(id);
+        System.out.println(id);
+        int ID=Integer.parseInt(id);
+        System.out.println("delete message"+tcherID+"orderid:"+ID);
+        reserveRepository.delete(ID);
+        return "redirect:/teacher";
+    }
+    @RequestMapping(value = "/change",method = RequestMethod.POST)
+    public String change(HttpServletRequest request,Model model)
+    {
+        HttpSession session=request.getSession();
+        tcherID=session.getAttribute("id").toString();
+        String newpasswd="new passwd";
+        tcherLoginRepository.update(tcherID,newpasswd);
         return "redirect:/teacher";
     }
 
