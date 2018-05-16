@@ -3,6 +3,7 @@ package com.bugless.campus_online;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -51,7 +52,11 @@ public class StuController {
         model.addAttribute("currentReserves", currentReserve);
         System.out.println("StuController : FinishedCurrentReserve");
 
-        System.out.println("StuController : Finished GET");
+        //学生姓名显示
+        String stuName = stuLoginRepository.findByStuID(current_id).getStuName();
+        model.addAttribute("StuName", stuName);
+        System.out.println("StuController : "+stuName);
+
         return "student";
     }
 
@@ -80,13 +85,13 @@ public class StuController {
     }
 
     //删除当前预约
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String deleteReserve(HttpServletRequest request, HttpSession httpSession) {
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String deleteReserve(HttpSession httpSession, @PathVariable(value = "id") String id) {
         current_id = httpSession.getAttribute("id").toString();
         System.out.println("StuController-delete : "+current_id+" length : "+current_id.length());
-        String delTime = request.getParameter("deleteReserve");
-        System.out.println("StuController-delete : "+delTime+" length : "+delTime.length());
-        reserveRepository.deleteReserve(null, delTime);
+        int ID = Integer.parseInt(id);
+        System.out.println("StuController-delete : ID "+id);
+        reserveRepository.deleteReserve(null, ID);
         System.out.println("StuController-delete : Deleted the reservation");
 
         return "redirect:/student";
