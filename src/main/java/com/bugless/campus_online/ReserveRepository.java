@@ -21,10 +21,10 @@ public interface ReserveRepository extends JpaRepository<Reservation, Integer> {
     @Transactional
     public void updateReservation(String tcherID,String resrvTime);
 
-    @Query(value = "delete from reservation  where tcher_id=?1 and resrv_time=?2 ", nativeQuery = true)
+    @Query(value = "delete from reservation  where id=?1 ", nativeQuery = true)
     @Modifying
     @Transactional
-    public void delete(String tcherID,String resrvTime);
+    public void delete(int id);
     //http://www.cnblogs.com/hawell/p/SpringDataJpa.html
     /*------------------------------------张博凯------------------------------------*/
 
