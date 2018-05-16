@@ -7,12 +7,52 @@
     <script src="//cdn.bootcss.com/vue/2.3.0/vue.min.js"></script>
     <script src="//cdn.bootcss.com/element-ui/1.3.0/index.js"></script>
     <script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 </head>
 <body>
 <div id="app">
     <div class="header">
         <span class="logo">
             <span class="font" >学生界面</span>
+            <span class="changepwd">
+                <a class="changepwd_a" onclick="changePassword()">修改密码</a>
+                <script type="text/javascript">
+                    function changePassword() {
+                        var passWord=prompt("输入新密码：","");
+                        var passWordAgain=prompt("再次输入新密码：","");
+                        if(passWord==passWordAgain)
+                        {
+                            var xhr=new XMLHttpRequest();//新建一个XMLHttpRequest对象
+                            url="/teacher/update?passwd="+passWord;
+                            xhr.open("get",url,true);//初始化请求
+                            xhr.send(null);
+                            alert("success");
+                        }
+                        else
+                        {
+                            alert("密码输入不一致！");
+                        }
+                    }
+                </script>
+            </span>
+            <span class="exit_login">
+                <a class="exit_login_href"  onclick="exitlogin()">退出登录</a>
+                <script type="text/javascript">
+                    function exitlogin() {
+                        $.ajax({
+                            url:'/student/logout',
+                            type:'post',
+                            async : false,
+                            success : function(msg) {
+                                window.location.replace("/login");
+                            },
+                            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                                alert("error");
+                            }
+                        })
+                    }
+                </script>
+            </span>
         </span>
         <span class="userinfo">
 
@@ -21,20 +61,20 @@
     <div class="main">
 
         <aside class="guide">
-                <!--需要post 方法selectTeacher，提交选择的教师ID,递交获取可预约时间的get方法-->
-                <form class="add" method="post" th:method="post" action="/student/submit">
-                    <div class="add_select" >
-                        <a class="function_tch">选择预约</a>
-                        <br>
-                        <select class="select_bar" name="submitReserve">
-                            <!--需要get方法，获取所有老师-->
-                            <option th:each="tch:${stuReserves}" th:text="${tch.resrvTime}" th:value="${tch.resrvTime}"></option>
-                        </select>
-                    </div>
-                    <div class="add_commit">
-                        <input type="submit" name="select_tch" value="提交预约" onclick="">
-                    </div>
-                </form>
+            <!--需要post 方法selectTeacher，提交选择的教师ID,递交获取可预约时间的get方法-->
+            <form class="add" method="post" th:method="post" action="/student/submit">
+                <div class="add_select" >
+                    <a class="function_tch">选择预约</a>
+                    <br>
+                    <select class="select_bar" name="submitReserve">
+                        <!--需要get方法，获取所有老师-->
+                        <option th:each="tch:${stuReserves}" th:text="${tch.resrvTime}" th:value="${tch.resrvTime}"></option>
+                    </select>
+                </div>
+                <div class="add_commit">
+                    <input type="submit" name="select_tch" value="提交预约" onclick="">
+                </div>
+            </form>
         </aside>
 
 
@@ -96,7 +136,7 @@
                                 </td>
                                 <td class="table_cell" width="10">
                                     <div class="cell" align="center">
-                                        <button type="button" class="button" name="delete">删除</button>
+                                        <a class="btn btn-info" th:href="@{/teacher/delete/{id}(id=${reserve.id})}"  target="_self">取消预约</a>
                                     </div>
                                 </td>
                             </tr>
@@ -129,7 +169,7 @@
 
 <script type="text/javascript">
     function submit() {
-        
+
     }
 </script>
 
@@ -230,5 +270,47 @@
     }
     .add_commit{
         height: 20%;
+    }
+    .changepwd{
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 30px;
+        left: 90%;
+        color: white;
+        font-size: 14px;
+    }
+    .exit_login{
+        position: absolute;
+        right: 0;
+        top: 35px;
+        bottom: 60px;
+        left: 90%;
+        color: white;
+        font-size: 14px;
+    }
+    .btn-info{
+        text-decoration: none;
+    }
+    .btn-info:link{
+        color: blue;
+    }
+    .btn-info:active{
+        color: aqua;
+    }
+    .exit_login_href{
+        text-decoration: white;
+    }
+    .exit_login_href:link{
+        color: white;
+    }
+    .exit_login_href:active{
+        color: aqua;
+    }
+    .changepwd{
+        cursor: pointer;
+    }
+    .exit_login{
+        cursor: pointer;
     }
 </style>
