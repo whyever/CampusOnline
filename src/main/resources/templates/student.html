@@ -21,20 +21,20 @@
     <div class="main">
 
         <aside class="guide">
-                <!--需要post 方法selectTeacher，提交选择的教师ID,递交获取可预约时间的get方法-->
-                <form class="add" method="post" th:method="post" action="/student/submit">
-                    <div class="add_select" >
-                        <a class="function_tch">选择预约</a>
-                        <br>
-                        <select class="select_bar" name="submitReserve">
-                            <!--需要get方法，获取所有老师-->
-                            <option th:each="tch:${stuReserves}" th:text="${tch.resrvTime}" th:value="${tch.resrvTime}"></option>
-                        </select>
-                    </div>
-                    <div class="add_commit">
-                        <input type="submit" name="select_tch" value="提交预约" onclick="">
-                    </div>
-                </form>
+            <!--需要post 方法selectTeacher，提交选择的教师ID,递交获取可预约时间的get方法-->
+            <form class="add" method="post" th:method="post" action="/student/submit">
+                <div class="add_select" >
+                    <a class="function_tch">选择预约</a>
+                    <br>
+                    <select class="select_bar" name="submitReserve">
+                        <!--需要get方法，获取所有老师-->
+                        <option th:each="tch:${stuReserves}" th:text="${tch.resrvTime}" th:value="${tch.resrvTime}"></option>
+                    </select>
+                </div>
+                <div class="add_commit">
+                    <input type="submit" name="select_tch" value="提交预约" onclick="">
+                </div>
+            </form>
         </aside>
 
 
@@ -129,7 +129,7 @@
 
 <script type="text/javascript">
     function submit() {
-        
+
     }
 </script>
 

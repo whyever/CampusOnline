@@ -12,11 +12,31 @@
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
 
 </head>
-<body onload="checkCookie()">
+<body>
 <div id="app">
     <div class="header">
         <span class="logo">
             <span class="font" >教师界面</span>
+            <span class="changepwd">
+                <a onclick="changePassword()">修改密码</a>
+                <script type="text/javascript">
+                    function changePassword() {
+                        var passWord=prompt("输入新密码：","");
+                        var passWordAgain=prompt("再次输入新密码：","");
+                        if(passWord==passWordAgain)
+                        {
+
+                        }
+                        else
+                        {
+                            alert("密码输入不一致！");
+                        }
+                    }
+                </script>
+            </span>
+            <span class="exit_login">
+                <a href="/login">退出登录</a>
+            </span>
         </span>
         <span class="userinfo">
             <!--测试记录用户属性-->
@@ -73,7 +93,7 @@
                     <br>
                 </div>
                 <div class="function">
-                    <input type="submit" id="select_time" value="提交预约" onclick="javascript:Window.location.reload()" >
+                    <input type="submit" value="提交预约"  >
                 </div>
             </form>
 
@@ -113,56 +133,41 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <!--action 路径不确定--&&注释了下行>
+                            <!--action 路径不确定&&注释了下行-->
                             <!--form th:method="post" th:object="TcherFetch" action="/teacher/delete" -->
-                                <!--加get返回预约信息，注入list表格显示-->
-                                <tr class="table_row" th:each="reserve: ${reserveList}">
-                                    <form method="post" action="/teacher/delete">
-                                        <td class="table_cell">
-                                            <div class="cell">
-                                                <div th:text="${reserve.resrvFlag}" name="resrvFlag">结果</div>
-                                            </div>
-                                        </td>
-                                        <td class="table_cell">
-                                            <div class="cell">
-                                                <div th:text="${reserve.stuID}" name="stuID">StuID</div>
-                                            </div>
-                                        </td>
-                                        <td class="table_cell">
-                                            <div class="cell">
-                                                <div th:text="${reserve.resrvTime}" name="resrvTime">time</div>
-                                            </div>
-                                        </td>
-                                        <td class="table_cell">
-                                            <div class="cell">
-                                                <div th:text="${reserve.tcherID}" name="tcherID">TeacherID</div>
-                                            </div>
-                                        </td>
-                                        <td class="table_cell" width="10">
-                                            <div class="cell" align="center">
-                                                <button type="submit" class="button" name="delete">删除</button>
-                                            </div>
-                                        </td>
-                                    </form>
-
-                                </tr>
+                            <!--加get返回预约信息，注入list表格显示-->
+                            <tr class="table_row" th:each="reserve: ${reserveList}" id="delete_time">
+                                <td class="table_cell">
+                                    <div class="cell">
+                                        <div th:text="${reserve.resrvFlag}" name="resrvFlag">结果</div>
+                                    </div>
+                                </td>
+                                <td class="table_cell">
+                                    <div class="cell">
+                                        <div th:text="${reserve.stuID}" name="stuID">StuID</div>
+                                    </div>
+                                </td>
+                                <td class="table_cell">
+                                    <div class="cell">
+                                        <div th:text="${reserve.resrvTime}" name="resrvTime">time</div>
+                                    </div>
+                                </td>
+                                <td class="table_cell">
+                                    <div class="cell">
+                                        <div th:text="${reserve.tcherID}" name="tcherID">TeacherID</div>
+                                    </div>
+                                </td>
+                                <td class="table_cell" width="10">
+                                    <div class="cell" align="center">
+                                        <a class="btn btn-info" th:href="@{/teacher/delete/{id}(id=${reserve.id})}"  target="_self">取消预约</a>
+                                        <!--button type="submit" class="button" name="delete" href="/teacher/delete?Id=${reserve.Id}">删除</button-->
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!--
-                    <div class="table_body_wrapper">
-                        <table class="table_body" width="885px">
-                            <colgroup>
-                                <col name="col_No" width="10">
-                                <col name="col_StuID" width="30">
-                                <col name="col_time" width="30">
-                                <col name="col_TchID" width="30">
-                                <col name="col_op" width="30">
-                            </colgroup>
 
-                        </table>
-                    </div>
-                    -->
                 </div>
             </form>
 
@@ -175,9 +180,12 @@
 
 <script>
 
-    $("#select_time").click(function(){
+    $("#delete_time").click(function(obj){
         var url = "/teacher";
-        var data = {type:1};
+        var td = $(obj).parents('tr').children('td');
+        var paramName=$td.eq(3).text();
+        var paramTime=$td.eq(2).text();
+        alert(paramName.toString()+","+paramTime.toString());
         $.ajax({
             type : "get",
             async : false,  //同步请求
@@ -195,24 +203,25 @@
     });
 
     function getQueryString(name) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
 
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) {
-        return r[2];
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return r[2];
+        }
+        return null;
     }
-    return null;
-    }
-
-    function add(){
-        var time=new String();
-        time=document.getElementById("input_year").value+"."
-            document.getElementById("input_month").value+"."
-            document.getElementById("input_date").value+"."
-            document.getElementById("input_year").value;
-        var function_add="<%add(TcherFetch(time))%>";
-        alert(function_add);
-    }
+    /*
+        function add(){
+            var time=new String();
+            time=document.getElementById("input_year").value+"."
+                document.getElementById("input_month").value+"."
+                document.getElementById("input_date").value+"."
+                document.getElementById("input_year").value;
+            var function_add="<%add(TcherFetch(time))%>";
+            alert(function_add);
+        }
+        */
 
 
 
@@ -309,6 +318,24 @@
     }
     .add{
         height: 100%;
+    }
+    .changepwd{
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 30px;
+        left: 90%;
+        color: white;
+        font-size: 14px;
+    }
+    .exit_login{
+        position: absolute;
+        right: 0;
+        top: 35px;
+        bottom: 60px;
+        left: 90%;
+        color: white;
+        font-size: 14px;
     }
 </style>
 
