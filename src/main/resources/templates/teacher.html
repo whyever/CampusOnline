@@ -135,35 +135,35 @@
                             <tbody>
                             <!--action 路径不确定&&注释了下行-->
                             <!--form th:method="post" th:object="TcherFetch" action="/teacher/delete" -->
-                            <!--加get返回预约信息，注入list表格显示-->
-                            <tr class="table_row" th:each="reserve: ${reserveList}" id="delete_time">
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text="${reserve.resrvFlag}" name="resrvFlag">结果</div>
-                                    </div>
-                                </td>
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text="${reserve.stuID}" name="stuID">StuID</div>
-                                    </div>
-                                </td>
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text="${reserve.resrvTime}" name="resrvTime">time</div>
-                                    </div>
-                                </td>
-                                <td class="table_cell">
-                                    <div class="cell">
-                                        <div th:text="${reserve.tcherID}" name="tcherID">TeacherID</div>
-                                    </div>
-                                </td>
-                                <td class="table_cell" width="10">
-                                    <div class="cell" align="center">
-                                        <a class="btn btn-info" th:href="@{/teacher/delete/{id}(id=${reserve.id})}"  target="_self">取消预约</a>
-                                        <!--button type="submit" class="button" name="delete" href="/teacher/delete?Id=${reserve.Id}">删除</button-->
-                                    </div>
-                                </td>
-                            </tr>
+                                <!--加get返回预约信息，注入list表格显示-->
+                                <tr class="table_row" th:each="reserve: ${reserveList}" id="delete_time">
+                                        <td class="table_cell">
+                                            <div class="cell">
+                                                <div th:text="${reserve.resrvFlag}" name="resrvFlag">结果</div>
+                                            </div>
+                                        </td>
+                                        <td class="table_cell">
+                                            <div class="cell">
+                                                <div th:text="${reserve.stuID}" name="stuID">StuID</div>
+                                            </div>
+                                        </td>
+                                        <td class="table_cell">
+                                            <div class="cell">
+                                                <div th:text="${reserve.resrvTime}" name="resrvTime">time</div>
+                                            </div>
+                                        </td>
+                                        <td class="table_cell">
+                                            <div class="cell">
+                                                <div th:text="${reserve.tcherID}" name="tcherID">TeacherID</div>
+                                            </div>
+                                        </td>
+                                        <td class="table_cell" width="10">
+                                            <div class="cell" align="center">
+                                                <a class="btn btn-info" th:href="@{/teacher/delete/{id}(id=${reserve.id})}"  target="_self">取消预约</a>
+                                                <!--button type="submit" class="button" name="delete" href="/teacher/delete?Id=${reserve.Id}">删除</button-->
+                                            </div>
+                                        </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -203,25 +203,25 @@
     });
 
     function getQueryString(name) {
-        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
 
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return r[2];
-        }
-        return null;
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return r[2];
     }
-    /*
-        function add(){
-            var time=new String();
-            time=document.getElementById("input_year").value+"."
-                document.getElementById("input_month").value+"."
-                document.getElementById("input_date").value+"."
-                document.getElementById("input_year").value;
-            var function_add="<%add(TcherFetch(time))%>";
-            alert(function_add);
-        }
-        */
+    return null;
+    }
+/*
+    function add(){
+        var time=new String();
+        time=document.getElementById("input_year").value+"."
+            document.getElementById("input_month").value+"."
+            document.getElementById("input_date").value+"."
+            document.getElementById("input_year").value;
+        var function_add="<%add(TcherFetch(time))%>";
+        alert(function_add);
+    }
+    */
 
 
 
