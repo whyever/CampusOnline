@@ -42,7 +42,10 @@ public class StuController {
         for(Reservation reservation : availableReserve) {
             String timeTemp=reservation.getResrvTime();
             String tcherId=reservation.getTcherID();
-            reservation.setResrvTime("老师:"+tcherId+" "+"时间:"+timeTemp);
+            TcherLogin tcherLogin=tcherLoginRepository.findByTcherID(tcherId);
+            String tcherName=tcherLogin.getTcherName();
+            //预约项格式: 李老师 111111111 时间: 2018-06-01-08:00~09:45
+            reservation.setResrvTime(tcherName+" "+tcherId+" "+"时间: "+timeTemp);
         }
 
         model.addAttribute("stuReserves",availableReserve);
@@ -52,12 +55,11 @@ public class StuController {
         List<Reservation> currentReserve = reserveRepository.findByStuID(current_id);
         System.out.println("StuController : FindCurrentReserveDone");
         for(Reservation reservation : currentReserve) {
-            String tcher_id = reservation.getTcherID();
-            TcherLogin tcherLogin = tcherLoginRepository.findByTcherID(tcher_id);
-            String tcher_name = tcherLogin.getTcherName();
-            reservation.setTcherID(tcher_name); //把显示的老师ID换成老师姓名
+            String tcherId = reservation.getTcherID();
+            TcherLogin tcherLogin = tcherLoginRepository.findByTcherID(tcherId);
+            String tcherName = tcherLogin.getTcherName();
+            reservation.setTcherID(tcherName); //把显示的老师ID换成老师姓名
         }
-        
         model.addAttribute("currentReserves", currentReserve);
         System.out.println("StuController : FinishedCurrentReserve");
 
@@ -79,9 +81,9 @@ public class StuController {
         current_id = httpSession.getAttribute("id").toString();
         System.out.println("StuController-submit : "+current_id+" length : "+current_id.length());
         String submitString = request.getParameter("submitReserve");
-        String availaTcherID = submitString.substring(3,12);
+        String availaTcherID = submitString.substring(4,13);    //获取教师D
         System.out.println("StuController-submit-tcherid : "+availaTcherID+" length : "+availaTcherID.length());
-        String availaTime = submitString.substring(16,submitString.length());
+        String availaTime = submitString.substring(submitString.length()-22,submitString.length());     //获取时间
         System.out.println("StuController-submit-time : "+availaTime+" length : "+availaTime.length());
         //提交预约即在已有表项中写入学生学号及预约标记
         reserveRepository.submitReserve1(current_id,availaTcherID,availaTime);
@@ -124,6 +126,7 @@ public class StuController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("id");
+        System.out.println("StuController-logout : Exited");
 
         return "redirect:/login";
     }
