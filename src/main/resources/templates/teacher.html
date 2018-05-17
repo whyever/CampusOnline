@@ -17,6 +17,7 @@
     <div class="header">
         <span class="logo">
             <span class="font" >教师界面</span>
+            <span class="welcome" th:text="'welcome to CampusOnline : '+'!'"></span>
             <span class="changepwd">
                 <a class="changepwd_a" onclick="changePassword()">修改密码</a>
                 <script type="text/javascript">
@@ -40,11 +41,13 @@
                 </script>
             </span>
             <span class="exit_login">
-                <a class="exit_login_href" href="/login" >退出登录</a>
+                <a class="exit_login_href" onclick="exitlogin()" >退出登录</a>
                 <script type="text/javascript">
                     function exitlogin() {
+                        window.location.replace("/login");
+                        /*
                         $.ajax({
-                            url:'/student/logout',
+                            url:'/teacher/logout',
                             type:'post',
                             async : false,
                             success : function(msg) {
@@ -54,6 +57,7 @@
                                 alert("error");
                             }
                         })
+                        */
                     }
                 </script>
             </span>
@@ -86,20 +90,6 @@
                                 //document.write("<option th:text=\""+i.toString()+"\" th:value=\""+i.toString()+"\"></option>");
                             }
                         </script>
-                        <!--
-                        <option th:text="01" th:value="01"></option>
-                        <option th:text="02" th:value="02"></option>
-                        <option th:text="03" th:value="03"></option>
-                        <option th:text="04" th:value="04"></option>
-                        <option th:text="05" th:value="05"></option>
-                        <option th:text="06" th:value="06"></option>
-                        <option th:text="07" th:value="07"></option>
-                        <option th:text="08" th:value="08"></option>
-                        <option th:text="09" th:value="09"></option>
-                        <option th:text="10" th:value="10"></option>
-                        <option th:text="11" th:value="11"></option>
-                        <option th:text="12" th:value="12"></option>
-                        -->
                     </select>
                     <br>
 
@@ -271,8 +261,10 @@
     .header{
         position: absolute;top:0%;bottom: 88%;left: 0%;right: 0%;
         background-color: #ad19ff;
+        /*
         line-height: 60px;
         font-size: 30px;
+        */
         color: white;
     }
     .logo{
@@ -382,12 +374,9 @@
     .btn-info:active{
         color: aqua;
     }
-    .exit_login_href{
-        text-decoration: white;
-    }
     .exit_login_href:link{
         color: white;
-
+        text-decoration: none;
     }
     .exit_login_href:active{
         color: aqua;
@@ -397,5 +386,23 @@
     }
     .exit_login{
         cursor: pointer;
+    }
+    .font{
+        position: absolute;
+        top: 0;
+        bottom: 20%;
+        left: 0;
+        right: 25%;
+        font-size: 125%;
+        line-height: 200%;
+    }
+    .welcome{
+        position: absolute;
+        top: 80%;
+        bottom: 0%;
+        left: 0;
+        right: 25%;
+        font-size: 75%;
+        line-height: 100%;
     }
 </style>

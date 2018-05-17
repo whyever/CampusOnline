@@ -14,7 +14,7 @@
     <div class="header">
         <span class="logo">
             <span class="font" >学生界面</span>
-                <span class="welcome" th:text="'welcome to CampusOnline : '+${StuName}+'!'"></span>
+            <span class="welcome" th:text="'welcome to CampusOnline : '+${StuName}+'!'"></span>
             <span class="changepwd">
                 <a class="changepwd_a" onclick="changePassword()">修改密码</a>
                 <script type="text/javascript">
@@ -41,6 +41,8 @@
                 <a class="exit_login_href"  onclick="exitlogin()">退出登录</a>
                 <script type="text/javascript">
                     function exitlogin() {
+                        window.location.replace("/login");
+                        /*
                         $.ajax({
                             url:'/student/logout',
                             type:'post',
@@ -52,6 +54,7 @@
                                 alert("error");
                             }
                         })
+                        */
                     }
                 </script>
             </span>
