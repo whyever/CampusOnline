@@ -23,10 +23,11 @@
                         if(passWord==passWordAgain)
                         {
                             var xhr=new XMLHttpRequest();//新建一个XMLHttpRequest对象
-                            url="/teacher/update?passwd="+passWord;
+                            url="/student/changePass?newPassword="+passWord;
                             xhr.open("get",url,true);//初始化请求
                             xhr.send(null);
                             alert("success");
+                            window.location.replace("/login");
                         }
                         else
                         {
@@ -136,7 +137,7 @@
                                 </td>
                                 <td class="table_cell" width="10">
                                     <div class="cell" align="center">
-                                        <a class="btn btn-info" th:href="@{/teacher/delete/{id}(id=${reserve.id})}"  target="_self">取消预约</a>
+                                        <a class="btn btn-info" th:href="@{/student/delete/{id}(id=${reserve.id})}"  target="_self">取消预约</a>
                                     </div>
                                 </td>
                             </tr>
