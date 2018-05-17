@@ -76,25 +76,41 @@
                     <br>
                     <a class="function_time_month">月：</a>
                     <select id="input_month" type="text" name="month">
-                        <option th:text="1" th:value="1"></option>
-                        <option th:text="2" th:value="2"></option>
-                        <option th:text="3" th:value="3"></option>
-                        <option th:text="4" th:value="4"></option>
-                        <option th:text="5" th:value="5"></option>
-                        <option th:text="6" th:value="6"></option>
-                        <option th:text="7" th:value="7"></option>
-                        <option th:text="8" th:value="8"></option>
-                        <option th:text="9" th:value="9"></option>
+                        <script type="text/javascript">
+                            for (var i=1;i<10;i++){
+                                document.write("<option value=\"0"+i.toString()+"\">0"+i.toString()+"</option>")
+                                //document.write("<option th:text=\""+i.toString()+"\" th:value=\""+i.toString()+"\"></option>");
+                            }
+                            for (var i=10;i<13;i++){
+                                document.write("<option value=\""+i.toString()+"\">"+i.toString()+"</option>")
+                                //document.write("<option th:text=\""+i.toString()+"\" th:value=\""+i.toString()+"\"></option>");
+                            }
+                        </script>
+                        <!--
+                        <option th:text="01" th:value="01"></option>
+                        <option th:text="02" th:value="02"></option>
+                        <option th:text="03" th:value="03"></option>
+                        <option th:text="04" th:value="04"></option>
+                        <option th:text="05" th:value="05"></option>
+                        <option th:text="06" th:value="06"></option>
+                        <option th:text="07" th:value="07"></option>
+                        <option th:text="08" th:value="08"></option>
+                        <option th:text="09" th:value="09"></option>
                         <option th:text="10" th:value="10"></option>
                         <option th:text="11" th:value="11"></option>
                         <option th:text="12" th:value="12"></option>
+                        -->
                     </select>
                     <br>
 
                     <a class="function_time_date">日：</a>
                     <select id="input_date" type="text" name="date">
                         <script type="text/javascript">
-                            for (var i=1;i<32;i++){
+                            for (var i=1;i<10;i++){
+                                document.write("<option value=\"0"+i.toString()+"\">0"+i.toString()+"</option>")
+                                //document.write("<option th:text=\""+i.toString()+"\" th:value=\""+i.toString()+"\"></option>");
+                            }
+                            for (var i=10;i<32;i++){
                                 document.write("<option value=\""+i.toString()+"\">"+i.toString()+"</option>")
                                 //document.write("<option th:text=\""+i.toString()+"\" th:value=\""+i.toString()+"\"></option>");
                             }
@@ -371,6 +387,7 @@
     }
     .exit_login_href:link{
         color: white;
+
     }
     .exit_login_href:active{
         color: aqua;

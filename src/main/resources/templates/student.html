@@ -14,6 +14,7 @@
     <div class="header">
         <span class="logo">
             <span class="font" >学生界面</span>
+                <span class="welcome" th:text="'welcome to CampusOnline : '+${StuName}+'!'"></span>
             <span class="changepwd">
                 <a class="changepwd_a" onclick="changePassword()">修改密码</a>
                 <script type="text/javascript">
@@ -182,8 +183,8 @@
     .header{
         position: absolute;top:0%;bottom: 88%;left: 0%;right: 0%;
         background-color: #ad19ff;
-        line-height: 60px;
-        font-size: 30px;
+        /*line-height: 60px;
+        font-size: 30px;*/
         color: white;
     }
     .logo{
@@ -313,5 +314,23 @@
     }
     .exit_login{
         cursor: pointer;
+    }
+    .font{
+        position: absolute;
+        top: 0;
+        bottom: 20%;
+        left: 0;
+        right: 25%;
+        font-size: 125%;
+        line-height: 200%;
+    }
+    .welcome{
+        position: absolute;
+        top: 80%;
+        bottom: 0%;
+        left: 0;
+        right: 25%;
+        font-size: 75%;
+        line-height: 100%;
     }
 </style>
