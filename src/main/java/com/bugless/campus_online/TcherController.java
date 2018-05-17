@@ -82,23 +82,19 @@ public class TcherController extends HttpServlet {
     {
         HttpSession session=request.getSession();
         tcherID=session.getAttribute("id").toString();
-
-        //Time=request.getParameter("resrvtime".toString());
-        //int ID =Integer.parseInt(id);
         System.out.println(id);
         int ID=Integer.parseInt(id);
         System.out.println("delete message"+tcherID+"orderid:"+ID);
         reserveRepository.delete(ID);
         return "redirect:/teacher";
     }
-    @RequestMapping(value = "/change",method = RequestMethod.POST)
-    public String change(HttpServletRequest request,Model model)
-    {
-        HttpSession session=request.getSession();
-        tcherID=session.getAttribute("id").toString();
-        String newpasswd="new passwd";
-        tcherLoginRepository.update(tcherID,newpasswd);
-        return "redirect:/teacher";
+
+    //退出登录
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout(HttpSession httpSession) {
+        httpSession.removeAttribute("id");
+
+        return "redirect:/login";
     }
 
 }
