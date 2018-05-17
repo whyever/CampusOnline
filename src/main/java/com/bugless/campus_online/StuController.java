@@ -98,9 +98,10 @@ public class StuController {
     }
 
     //修改密码
-    @RequestMapping(value = "/changePass", method = RequestMethod.POST)
-    public String changePassword(HttpServletRequest request, HttpSession httpSession) {
-        current_id = httpSession.getAttribute("id").toString();
+    @RequestMapping(value = "/changePass", method = RequestMethod.GET)
+    public String changePassword(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        current_id = session.getAttribute("id").toString();
         System.out.println("StuController-changePass : "+current_id);
         String newPass = request.getParameter("newPassword");
         System.out.println("StuController-changePass : "+newPass);
