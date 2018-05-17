@@ -22,10 +22,12 @@ public class StuController {
     @Autowired
     private ReserveRepository reserveRepository;
     private StuLoginRepository stuLoginRepository;
+    private TcherLoginRepository tcherLoginRepository;
 
-    public StuController(ReserveRepository reserveRepo, StuLoginRepository stuLoginRepository) {
+    public StuController(ReserveRepository reserveRepo, StuLoginRepository stuLoginRepository, TcherLoginRepository tcherLoginRepository) {
         this.reserveRepository = reserveRepo;
         this.stuLoginRepository = stuLoginRepository;
+        this.tcherLoginRepository = tcherLoginRepository;
     }
 
     //获取当前可预约项
@@ -49,6 +51,13 @@ public class StuController {
         //处理已有预约
         List<Reservation> currentReserve = reserveRepository.findByStuID(current_id);
         System.out.println("StuController : FindCurrentReserveDone");
+        for(Reservation reservation : currentReserve) {
+            String tcher_id = reservation.getTcherID();
+            TcherLogin tcherLogin = tcherLoginRepository.findByTcherID(tcher_id);
+            String tcher_name = tcherLogin.getTcherName();
+            reservation.setTcherID(tcher_name); //把显示的老师ID换成老师姓名
+        }
+        
         model.addAttribute("currentReserves", currentReserve);
         System.out.println("StuController : FinishedCurrentReserve");
 

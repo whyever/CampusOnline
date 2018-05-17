@@ -13,12 +13,19 @@ public class TcherLogin {
     @Column(name = "tcher_id", nullable = false)
     private String tcherID;
 
+    //老师姓名
+    @Column(name = "tcher_name", nullable = false)
+    private String tcherName;
+
     //密码提交前必须使用SHA256处理,得16进制64位字符串
     @Column(name = "tcher_passwd", nullable = false)
     private String tcherPasswd;
 
     public String getTcherID() { return tcherID; }
     public void setTcherID(String tcherID) { this.tcherID = tcherID; }
+
+    public String getTcherName() { return tcherName; }
+    public void setTcherName(String tcherName) { this.tcherName = tcherName; }
 
     public String getTcherPasswd() { return tcherPasswd; }
     public void setTcherPasswd(String tcherPasswd) { this.tcherPasswd = tcherPasswd; }
