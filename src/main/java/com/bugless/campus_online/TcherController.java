@@ -63,6 +63,8 @@ public class TcherController extends HttpServlet {
         tcherID=session.getAttribute("id").toString();
         List<Reservation> reservations=reserveRepository.findByTcherID(tcherID);
         model.addAttribute("reserveList",reservations);
+        String tcherName = tcherLoginRepository.findByTcherID(tcherID).getTcherName();
+        model.addAttribute("TcherName", tcherName);
         return "teacher";
     }
     //修改密码
